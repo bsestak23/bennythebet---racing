@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bennythebet | Horse Racing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── ROOT & RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:        #0b1622;
+      --navy-mid:    #102030;
+      --navy-light:  #1a3048;
+      --forest:      #0f2d1f;
+      --forest-mid:  #174030;
+      --gold:        #b8962a;
+      --gold-light:  #d4b04a;
+      --gold-pale:   #e8d49a;
+      --cream:       #f0e8d4;
+      --cream-dark:  #d4c8a8;
+      --burgundy:    #6b1f2a;
+      --ivory:       #faf6ee;
+      --white:       #ffffff;
+      --text-primary:#e8dfc8;
+      --text-muted:  #8a8070;
+      --text-dim:    #5a5248;
+      --border:      rgba(184,150,42,0.2);
+      --border-light:rgba(184,150,42,0.08);
+      --card-bg:     rgba(16,32,48,0.9);
+      --serif:       'Playfair Display', Georgia, serif;
+      --sans:        'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--serif);
+      background: var(--navy);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* Subtle grain texture */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    * { position: relative; z-index: 1; }
+
+    a { color: var(--gold-light); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--gold-pale); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11,22,34,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+      box-shadow: 0 1px 30px rgba(0,0,0,0.5);
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .nav-logo-mark {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      background: rgba(184,150,42,0.08);
+    }
+    .nav-brand-text {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 0.5px;
+    }
+    .nav-brand-text em {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .nav-brand-sub {
+      font-family: var(--sans);
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+      margin-top: -2px;
+    }
+
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+
+    .nav-cta {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 7px 16px;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); color: var(--navy); }
+
+    /* ── HERO ── */
+    .hero {
+      background:
+        linear-gradient(180deg, rgba(11,22,34,0) 0%, rgba(11,22,34,0.7) 60%, var(--navy) 100%),
+        linear-gradient(135deg, #0b1f10 0%, #0d1e30 50%, #1a0a12 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Decorative lines */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+      opacity: 0.4;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      display: inline-block;
+      width: 40px; height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 700;
+      color: var(--ivory);
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 .italic-accent {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-tagline {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+    }
+
+    .derby-card {
+      display: inline-block;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .derby-card-label {
+      font-family: var(--sans);
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+    .derby-countdown {
+      display: flex; gap: 2rem; align-items: center;
+    }
+    .countdown-unit { text-align: center; }
+    .countdown-num {
+      display: block;
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--gold-pale);
+      line-height: 1;
+    }
+    .countdown-sep {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--gold);
+      opacity: 0.4;
+      margin-bottom: 1.2rem;
+    }
+    .countdown-label {
+      font-family: var(--sans);
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .hero-meta {
+      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .hero-meta-item strong {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+
+    /* ── DECORATIVE RULE ── */
+    .ornamental-rule {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0 2.5rem;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .ornamental-rule::before, .ornamental-rule::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .ornamental-rule .diamond {
+      color: var(--gold);
+      font-size: 0.5rem;
+      opacity: 0.5;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page-section {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-head {
+      display: flex; align-items: baseline; gap: 1.2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-head h2 {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--ivory);
+      letter-spacing: -0.3px;
+    }
+    .section-pill {
+      font-family: var(--sans);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 3px 10px;
+      border-radius: 2px;
+      opacity: 0.8;
+    }
+    .section-pill.active {
+      background: var(--gold);
+      color: var(--navy);
+      opacity: 1;
+    }
+
+    /* ── NEWS ── */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1px;
+      background: var(--border-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .news-card {
+      background: var(--card-bg);
+      padding: 1.6rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    .news-card:hover { background: rgba(184,150,42,0.06); }
+
+    .news-category {
+      font-family: var(--sans);
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .news-card h3 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ivory);
+      line-height: 1.45;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-card p {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .news-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--border-light);
+    }
+    .news-date {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+    }
+    .news-read-more {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .news-card:hover .news-read-more { opacity: 1; }
+    .news-notice {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      text-align: right;
+      margin-top: 0.8rem;
+      font-style: italic;
+    }
+
+    /* ── STAKES TABLE ── */
+    .stakes-wrap {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .stakes-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+    }
+    .stakes-table thead {
+      background: rgba(184,150,42,0.08);
+      border-bottom: 1px solid var(--border);
+    }
+    .stakes-table th {
+      padding: 0.7rem 1rem;
+      text-align: left;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .stakes-table tbody tr {
+      border-bottom: 1px solid var(--border-light);
+      transition: background 0.15s;
+    }
+    .stakes-table tbody tr:hover { background: rgba(184,150,42,0.04); }
+    .stakes-table tbody tr:last-child { border-bottom: none; }
+    .stakes-table td {
+      padding: 0.75rem 1rem;
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+
+    .grade-pip {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      font-size: 0.68rem; font-weight: 700;
+      font-family: var(--sans);
+    }
+    .g1 { background: var(--gold); color: var(--navy); }
+    .g2 { background: #8a8a8a; color: #fff; }
+    .g3 { background: #9b6f3a; color: #fff; }
+
+    .surface-dot {
+      display: inline-block; width: 8px; height: 8px;
+      border-radius: 50%; margin-right: 5px;
+    }
+    .dot-turf  { background: #3aaa3a; }
+    .dot-dirt  { background: #b07830; }
+    .dot-poly  { background: #7070aa; }
+
+    .race-name-cell { color: var(--ivory); font-weight: 500; }
+    .track-cell { color: var(--text-muted); }
+    .purse-cell { color: #6adb6a; font-weight: 500; }
+    .note-cell { color: var(--text-dim); font-style: italic; font-size: 0.75rem; }
+    .derby-row { background: rgba(184,150,42,0.05); }
+
+    /* ── UPCOMING CARDS ── */
+    .upcoming-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .race-card {
+      background: var(--card-bg);
+      padding: 1.4rem;
+      transition: background 0.2s;
+    }
+    .race-card:hover { background: rgba(184,150,42,0.05); }
+    .race-card-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 0.8rem;
+    }
+    .race-track-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ivory);
+    }
+    .race-date-tag {
+      font-family: var(--sans);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+      text-align: right;
+    }
+    .race-card-name {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .race-chips {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-bottom: 0.8rem;
+    }
+    .chip {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-light);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+    .race-purse-line {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: #6adb6a;
+    }
+
+    /* ── PICKS ── */
+    .picks-intro {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+    .picks-toolbar {
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .btn {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.55rem 1.2rem;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-link {
+      background: transparent; border: none;
+      color: var(--text-dim); font-size: 0.65rem;
+      text-decoration: underline; cursor: pointer;
+      padding: 0;
+    }
+    .btn-link:hover { color: #e74c3c; }
+
+    .picks-filter-bar {
+      display: flex; gap: 0.4rem; flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+    .filter-btn {
+      font-family: var(--sans);
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--gold); color: var(--gold-light); }
+    .filter-btn.on { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+
+    .picks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .pick-card {
+      background: var(--card-bg);
+      padding: 1.3rem;
+      transition: background 0.15s;
+    }
+    .pick-card:hover { background: rgba(184,150,42,0.05); }
+
+    .pick-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 0.6rem;
+    }
+    .pick-track-label {
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .pick-race-tag {
+      font-family: var(--sans);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      border: 1px solid var(--border-light);
+      padding: 1px 7px; border-radius: 2px;
+    }
+    .pick-horse {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ivory);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .pick-badges {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .pick-bet-badge {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      background: rgba(184,150,42,0.15);
+      border: 1px solid rgba(184,150,42,0.3);
+      color: var(--gold-light);
+      padding: 2px 8px; border-radius: 2px;
+    }
+    .pick-odds-val {
+      font-family: var(--sans);
+      font-size: 0.82rem; font-weight: 600;
+      color: #6adb6a;
+    }
+    .pick-units {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .pick-note {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 0.4rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border-light);
+      line-height: 1.6;
+    }
+    .pick-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 0.8rem;
+    }
+    .pick-date { font-family: var(--sans); font-size: 0.62rem; color: var(--text-dim); }
+    .pick-actions { display: flex; gap: 0.5rem; }
+    .btn-edit, .btn-del {
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 3px 9px; border-radius: 2px;
+      border: 1px solid;
+      cursor: pointer; transition: all 0.15s;
+      background: transparent;
+    }
+    .btn-edit { border-color: var(--border); color: var(--text-muted); }
+    .btn-edit:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-del { border-color: rgba(180,40,40,0.3); color: rgba(220,80,80,0.7); }
+    .btn-del:hover { border-color: #c0392b; color: #e74c3c; background: rgba(192,57,43,0.08); }
+
+    .picks-empty {
+      border: 1px dashed rgba(184,150,42,0.2);
+      border-radius: 4px; padding: 3.5rem;
+      text-align: center;
+    }
+    .picks-empty-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5; }
+    .picks-empty p {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    /* ── MODAL ── */
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(5,10,16,0.85);
+      backdrop-filter: blur(6px);
+      align-items: center; justify-content: center;
+    }
+    .modal-backdrop.show { display: flex; }
+    .modal-box {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      width: min(500px, 94vw);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--ivory);
+    }
+    .modal-close {
+      font-family: var(--sans); font-size: 1.2rem;
+      background: none; border: none;
+      color: var(--text-dim); cursor: pointer;
+      line-height: 1; padding: 2px 6px;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--text-muted); }
+
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .field { margin-bottom: 0.9rem; }
+    .field label {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2px;
+      padding: 0.5rem 0.75rem;
+      color: var(--cream);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      transition: border-color 0.15s;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--text-dim); }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none; border-color: var(--gold);
+    }
+    .field select option { background: #1a2a3a; color: var(--cream); }
+    .modal-actions { display: flex; gap: 0.7rem; margin-top: 1.5rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: rgba(8,14,22,0.98);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .footer-sub {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+    }
+    .footer-disclaimer {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      max-width: 520px; margin: 0 auto;
+      line-height: 1.7; opacity: 0.6;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      nav { padding: 0 1.2rem; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+      .derby-countdown { gap: 1rem; }
+      .countdown-num { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo-mark">🏇</div>
+    <div>
+      <div class="nav-brand-text">benny<em>thebet</em></div>
+      <span class="nav-brand-sub">Horse Racing</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#news">News</a></li>
+    <li><a href="#stakes">Stakes</a></li>
+    <li><a href="#upcoming">Upcoming</a></li>
+    <li><a href="#picks">My Picks</a></li>
+  </ul>
+  <a href="#picks" class="nav-cta">+ Add Pick</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">🏆 Kentucky Derby Season 2026</div>
+  <h1>benny<span class="italic-accent">thebet</span></h1>
+  <p class="hero-tagline">Horse Racing · Picks · Analysis</p>
+
+  <div class="derby-card">
+    <div class="derby-card-label">Countdown to the Kentucky Derby — May 2, 2026</div>
+    <div class="derby-countdown">
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-days">—</span>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-hours">—</span>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-mins">—</span>
+        <div class="countdown-label">Mins</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-secs">—</span>
+        <div class="countdown-label">Secs</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-meta">
+    <div class="hero-meta-item"><strong>Edition</strong>152nd Run for the Roses</div>
+    <div class="hero-meta-item"><strong>Venue</strong>Churchill Downs, Louisville KY</div>
+    <div class="hero-meta-item"><strong>Post Time</strong>~6:57 PM ET</div>
+    <div class="hero-meta-item"><strong>Purse</strong>$5,000,000</div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="ornamental-rule" style="padding: 1.5rem 2.5rem;">
+  <span class="diamond">◆</span>
+</div>
+
+<!-- NEWS -->
+<section id="news" class="page-section">
+  <div class="section-head">
+    <h2>Racing News</h2>
+    <span class="section-pill">Latest</span>
+  </div>
+  <div class="news-grid" id="news-grid"></div>
+  <p class="news-notice">
+    Headlines are curated — click to open the full story when a link is available.
+    To add or edit stories, update the <code style="font-size:0.7rem;color:var(--gold)">newsData</code> array in the source.
+  </p>
+</section>
+
+<div class="ornamental-rule"><span class="diamond">◆</span></div>
+
+<!-- STAKES SCHEDULE -->
+<section id="stakes" class="page-section">
+  <div class="section-head">
+    <h2>Graded Stakes Schedule</h2>
+    <span class="section-pill">Spring 2026</span>
+  </div>
+  <div class="stakes-wrap" style="overflow-x:auto">
+    <table class="stakes-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Race</th>
+          <th>Track</th>
+          <th>Gr</th>
+          <th>Distance · Surface</th>
+          <th>Purse</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="stakes-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<div class="ornamental-rule"><span class="diamond">◆</span></div>
+
+<!-- UPCOMING RACES -->
+<section id="upcoming" class="page-section">
+  <div class="section-head">
+    <h2>Upcoming Cards</h2>
+    <span class="section-pill active">This Week</span>
+  </div>
+  <div class="upcoming-grid" id="upcoming-grid"></div>
+</section>
+
+<div class="ornamental-rule"><span class="diamond">◆</span></div>
+
+<!-- MY PICKS -->
+<section id="picks" class="page-section">
+  <div class="section-head">
+    <h2>My Picks</h2>
+    <span class="section-pill active">Live Card</span>
+  </div>
+  <p class="picks-intro">
+    Post your picks for any track and race below. Hit <strong style="color:var(--gold-light)">+ Add Pick</strong>,
+    fill in the details, and they'll appear on the board instantly. Picks are saved locally — they stay between sessions.
+  </p>
+  <div class="picks-toolbar">
+    <button class="btn btn-primary" onclick="openModal()">+ Add Pick</button>
+    <button class="btn btn-ghost" onclick="confirmClear()">Clear All</button>
+  </div>
+  <div class="picks-filter-bar" id="picks-filter"></div>
+  <div id="picks-board"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">bennythebet</div>
+  <div class="footer-sub">Horse Racing Picks &amp; Insights · @bennythebet</div>
+  <p class="footer-disclaimer">
+    For entertainment purposes only. Must be 21+ to wager. bennythebet does not operate
+    as a licensed sportsbook. Always verify odds with your bookmaker. Please gamble responsibly.
+  </p>
+</footer>
+
+<!-- PICK MODAL -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Add a Pick</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="form-grid-2">
+      <div class="field">
+        <label>Track *</label>
+        <input id="f-track" type="text" placeholder="e.g. Keeneland" />
+      </div>
+      <div class="field">
+        <label>Race #</label>
+        <input id="f-race" type="text" placeholder="e.g. Race 7" />
+      </div>
+    </div>
+    <div class="field">
+      <label>Horse Name *</label>
+      <input id="f-horse" type="text" placeholder="e.g. Sovereignty" />
+    </div>
+    <div class="form-grid-2">
+      <div class="field">
+        <label>Bet Type</label>
+        <select id="f-bet">
+          <option>Win</option>
+          <option>Place</option>
+          <option>Show</option>
+          <option>Win / Place</option>
+          <option>Exacta</option>
+          <option>Trifecta</option>
+          <option>Superfecta</option>
+          <option>Daily Double</option>
+          <option>Pick 3</option>
+          <option>Pick 4</option>
+          <option>Pick 5</option>
+          <option>Pick 6</option>
+          <option>Parlay</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Odds / Price</label>
+        <input id="f-odds" type="text" placeholder="e.g. 7/2 or +350" />
+      </div>
+    </div>
+    <div class="form-grid-2">
+      <div class="field">
+        <label>Units / Confidence</label>
+        <input id="f-units" type="text" placeholder="e.g. 2u · Lock · ⭐⭐" />
+      </div>
+      <div class="field">
+        <label>Article URL (optional)</label>
+        <input id="f-url" type="text" placeholder="https://..." />
+      </div>
+    </div>
+    <div class="field">
+      <label>Analysis / Notes</label>
+      <textarea id="f-note" rows="2" placeholder="Brief reason for the pick..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="savePick()">Save Pick</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════
+
+const newsData = [
+  {
+    category: "Kentucky Derby",
+    title: "Derby Prep Season Heats Up: Blue Grass, Santa Anita Derby & Wood Memorial on Tap",
+    body: "The final four preps before Churchill Downs are set. Points leaders are jockeying for position with 100-50-25-15-10 on the line in each Championship Series race.",
+    date: "Mar 27, 2026",
+    url: "" // ← paste a link here to make it clickable
+  },
+  {
+    category: "Big Ten Connections",
+    title: "Six Big Ten-Affiliated Connections Poised for Strong Derby Showing",
+    body: "Trainers based in the Midwest continue to dominate Keeneland's spring numbers. Multiple Big Ten connections expected to feature heavily at Churchill Downs in May.",
+    date: "Mar 26, 2026",
+    url: ""
+  },
+  {
+    category: "Keeneland",
+    title: "Keeneland Spring Meet Opens April 2 — Loaded Stakes Card Sets the Stage",
+    body: "The Blue Grass Stakes and Ben Ali will headline a premium stakes schedule at the Lexington oval. Turf course expected to be in excellent shape after a mild winter.",
+    date: "Mar 25, 2026",
+    url: ""
+  },
+  {
+    category: "Handicapping",
+    title: "Pace Analysis Outperforming Speed Figures in Early Spring Returns",
+    body: "Early data from the 2026 prep circuit shows pace-pressers thriving on Keeneland turf, while pure closers remain vulnerable on sealed main tracks after recent rains.",
+    date: "Mar 24, 2026",
+    url: ""
+  },
+  {
+    category: "Saratoga",
+    title: "The Spa Announces 40-Day Summer Meet — Whitney, Travers, Alabama All on Schedule",
+    body: "Saratoga opens July 16 through Labor Day. The Whitney and Travers anchor a deep summer card that figures to define the 2026 fall campaign.",
+    date: "Mar 22, 2026",
+    url: ""
+  },
+  {
+    category: "Value Plays",
+    title: "First-Time Starters to Watch: Quality Barns Rolling Out Maidens at Keeneland Opener",
+    body: "Several well-bred debut runners from top training operations are set to run at the Keeneland spring opener. Workout tabs and barn buzz point to a few overlay opportunities.",
+    date: "Mar 20, 2026",
+    url: ""
+  }
+];
+
+const stakesData = [
+  { date:"Apr 4",  name:"Tampa Bay Derby",      track:"Tampa Bay Downs", g:2, dist:"1 1/16m", surf:"Dirt", purse:"$400K",  note:"Derby Prep (85 pts)", derby:true  },
+  { date:"Apr 4",  name:"Santa Anita Oaks",     track:"Santa Anita",     g:1, dist:"1 1/16m", surf:"Dirt", purse:"$300K",  note:"Oaks Road",          derby:false },
+  { date:"Apr 4",  name:"Turfway Park Spiral",  track:"Turfway Park",    g:3, dist:"1 1/8m",  surf:"Poly", purse:"$300K",  note:"Derby Prep (50 pts)", derby:true  },
+  { date:"Apr 11", name:"Blue Grass Stakes",    track:"Keeneland",       g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1M",    note:"Derby Prep (100 pts) 🔥", derby:true  },
+  { date:"Apr 11", name:"Arkansas Derby",       track:"Oaklawn Park",    g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1.25M", note:"Derby Prep (100 pts) 🔥", derby:true  },
+  { date:"Apr 11", name:"Wood Memorial",        track:"Aqueduct",        g:2, dist:"1 1/8m",  surf:"Dirt", purse:"$750K",  note:"Derby Prep (100 pts) 🔥", derby:true  },
+  { date:"Apr 11", name:"Santa Anita Derby",    track:"Santa Anita",     g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1M",    note:"Derby Prep (100 pts) 🔥", derby:true  },
+  { date:"Apr 18", name:"Ben Ali Stakes",       track:"Keeneland",       g:3, dist:"1 1/8m",  surf:"Dirt", purse:"$200K",  note:"4-yr-olds & up",     derby:false },
+  { date:"Apr 24", name:"Bewitch Stakes",       track:"Keeneland",       g:3, dist:"1 1/2m",  surf:"Turf", purse:"$200K",  note:"F&M Turf",           derby:false },
+  { date:"May 1",  name:"Kentucky Oaks",        track:"Churchill Downs",  g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1.5M",  note:"Fillies Classic",    derby:false },
+  { date:"May 2",  name:"Kentucky Derby",       track:"Churchill Downs",  g:1, dist:"1 1/4m",  surf:"Dirt", purse:"$5M",    note:"🏆 The Run for the Roses", derby:false },
+];
+
+const upcomingRaces = [
+  { track:"Keeneland",       date:"Apr 2–24, 2026",   name:"Spring Meet 2026",         chips:["18 Race Days","Stakes Daily","Turf & Dirt"],             purse:"Multiple $1M+ Stakes" },
+  { track:"Oaklawn Park",    date:"Ongoing thru May",  name:"Spring Racing",             chips:["Arkansas Derby Apr 11","G1 Action Weekly","Main Track"],  purse:"Ark. Derby $1.25M"    },
+  { track:"Santa Anita",     date:"Ongoing thru Jun",  name:"Spring Meet",               chips:["SA Derby Apr 11","Turf & Dirt Programs","G1/G2 Weekly"],  purse:"SA Derby $1M"         },
+  { track:"Churchill Downs", date:"Apr 25 – Jun 27",   name:"Spring Meet · Derby Week",  chips:["Opens Apr 25","Kentucky Derby May 2","Oaks May 1"],        purse:"Derby $5M"            },
+  { track:"Aqueduct",        date:"Ongoing thru Apr",  name:"Big A Spring",              chips:["Wood Memorial Apr 11","Final NYRA Prep","Main Track"],      purse:"Wood Mem. $750K"      },
+  { track:"Tampa Bay Downs", date:"Apr 4, 2026",       name:"Tampa Bay Derby (G2)",      chips:["Derby Prep","85 Derby Points","1 1/16 Miles"],             purse:"$400,000"             },
+];
+
+// ══════════════════════════════════════════════
+//  RENDER: NEWS
+// ══════════════════════════════════════════════
+function renderNews() {
+  const grid = document.getElementById('news-grid');
+  grid.innerHTML = newsData.map(n => {
+    const isLinked = !!n.url;
+    const tag = isLinked ? `a href="${n.url}" target="_blank" rel="noopener"` : 'div';
+    const close = isLinked ? 'a' : 'div';
+    return `
+      <${tag} class="news-card" ${!isLinked ? '' : ''}>
+        <div class="news-category">${n.category}</div>
+        <h3>${n.title}</h3>
+        <p>${n.body}</p>
+        <div class="news-meta">
+          <span class="news-date">${n.date}</span>
+          <span class="news-read-more">${isLinked ? 'Read →' : 'Headline only'}</span>
+        </div>
+      </${close}>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+//  RENDER: STAKES
+// ══════════════════════════════════════════════
+function renderStakes() {
+  const surfDot = s => {
+    const cls = s === 'Turf' ? 'dot-turf' : s === 'Dirt' ? 'dot-dirt' : 'dot-poly';
+    return `<span class="surface-dot ${cls}"></span>${s}`;
+  };
+  document.getElementById('stakes-body').innerHTML = stakesData.map(s => `
+    <tr class="${s.derby ? 'derby-row' : ''}">
+      <td style="font-family:var(--sans);font-size:0.8rem;white-space:nowrap">${s.date}</td>
+      <td class="race-name-cell">${s.name}</td>
+      <td class="track-cell" style="font-family:var(--sans);font-size:0.78rem">${s.track}</td>
+      <td><span class="grade-pip g${s.g}">G${s.g}</span></td>
+      <td style="font-family:var(--sans);font-size:0.78rem;white-space:nowrap">${s.dist} &nbsp; ${surfDot(s.surf)}</td>
+      <td class="purse-cell" style="font-family:var(--sans);font-size:0.78rem">${s.purse}</td>
+      <td class="note-cell">${s.note}</td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════
+//  RENDER: UPCOMING
+// ══════════════════════════════════════════════
+function renderUpcoming() {
+  document.getElementById('upcoming-grid').innerHTML = upcomingRaces.map(r => `
+    <div class="race-card">
+      <div class="race-card-top">
+        <div class="race-track-name">${r.track}</div>
+        <div class="race-date-tag">${r.date}</div>
+      </div>
+      <div class="race-card-name">${r.name}</div>
+      <div class="race-chips">${r.chips.map(c => `<span class="chip">${c}</span>`).join('')}</div>
+      <div class="race-purse-line">💰 ${r.purse}</div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════
+//  PICKS
+// ══════════════════════════════════════════════
+let picks = [];
+try { picks = JSON.parse(localStorage.getItem('benny-picks') || '[]'); } catch(e) {}
+let editIdx = null;
+let activeFilter = 'all';
+
+function persist() { localStorage.setItem('benny-picks', JSON.stringify(picks)); }
+
+function openModal(idx = null) {
+  editIdx = idx;
+  const editing = idx !== null;
+  document.getElementById('modal-title').textContent = editing ? 'Edit Pick' : 'Add a Pick';
+  const p = editing ? picks[idx] : {};
+  document.getElementById('f-track').value  = p.track  || '';
+  document.getElementById('f-race').value   = p.race   || '';
+  document.getElementById('f-horse').value  = p.horse  || '';
+  document.getElementById('f-bet').value    = p.bet    || 'Win';
+  document.getElementById('f-odds').value   = p.odds   || '';
+  document.getElementById('f-units').value  = p.units  || '';
+  document.getElementById('f-url').value    = p.url    || '';
+  document.getElementById('f-note').value   = p.note   || '';
+  document.getElementById('modal-backdrop').classList.add('show');
+  setTimeout(() => document.getElementById('f-track').focus(), 80);
+}
+
+function closeModal() {
+  document.getElementById('modal-backdrop').classList.remove('show');
+  editIdx = null;
+}
+
+function savePick() {
+  const track = document.getElementById('f-track').value.trim();
+  const horse = document.getElementById('f-horse').value.trim();
+  if (!track || !horse) { alert('Track and horse name are required.'); return; }
+  const pick = {
+    track, horse,
+    race:  document.getElementById('f-race').value.trim()  || '—',
+    bet:   document.getElementById('f-bet').value,
+    odds:  document.getElementById('f-odds').value.trim()  || '—',
+    units: document.getElementById('f-units').value.trim(),
+    url:   document.getElementById('f-url').value.trim(),
+    note:  document.getElementById('f-note').value.trim(),
+    date:  new Date().toLocaleDateString('en-US', { month:'short', day:'numeric' })
+  };
+  if (editIdx !== null) picks[editIdx] = pick;
+  else picks.unshift(pick);
+  persist();
+  renderPicks();
+  closeModal();
+}
+
+function deletePick(idx) {
+  if (!confirm('Remove this pick?')) return;
+  picks.splice(idx, 1);
+  persist();
+  renderPicks();
+}
+
+function confirmClear() {
+  if (!picks.length) return;
+  if (!confirm('Clear all picks? This cannot be undone.')) return;
+  picks = []; persist(); renderPicks();
+}
+
+function setFilter(val, el) {
+  activeFilter = val;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  renderPickCards();
+}
+
+function renderPicks() {
+  // rebuild filter bar
+  const tracks = ['all', ...new Set(picks.map(p => p.track))];
+  const bar = document.getElementById('picks-filter');
+  bar.innerHTML = tracks.map(t =>
+    `<button class="filter-btn ${activeFilter === t ? 'on' : ''}"
+      onclick="setFilter('${t}',this)">${t === 'all' ? 'All Tracks' : t}</button>`
+  ).join('');
+  renderPickCards();
+}
+
+function renderPickCards() {
+  const board = document.getElementById('picks-board');
+  const list = activeFilter === 'all' ? picks : picks.filter(p => p.track === activeFilter);
+
+  if (!list.length) {
+    board.innerHTML = `
+      <div class="picks-empty">
+        <div class="picks-empty-icon">🏇</div>
+        <p>${picks.length
+          ? `No picks for <strong>${activeFilter}</strong>.`
+          : `No picks yet — hit <strong style="color:var(--gold-light)">+ Add Pick</strong> to post your first card.`
+        }</p>
+      </div>`;
+    return;
+  }
+
+  board.innerHTML = `<div class="picks-grid">${list.map(p => {
+    const realIdx = picks.indexOf(p);
+    return `
+      <div class="pick-card">
+        <div class="pick-header">
+          <div class="pick-track-label">${p.track}</div>
+          <div class="pick-race-tag">${p.race}</div>
+        </div>
+        <div class="pick-horse">${p.horse}</div>
+        <div class="pick-badges">
+          <span class="pick-bet-badge">${p.bet}</span>
+          <span class="pick-odds-val">${p.odds}</span>
+          ${p.units ? `<span class="pick-units">${p.units}</span>` : ''}
+        </div>
+        ${p.note ? `<div class="pick-note">${p.note}</div>` : ''}
+        <div class="pick-footer">
+          <div class="pick-date">${p.date}</div>
+          <div class="pick-actions">
+            <button class="btn-edit" onclick="openModal(${realIdx})">Edit</button>
+            <button class="btn-del"  onclick="deletePick(${realIdx})">✕</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('')}</div>`;
+}
+
+// ══════════════════════════════════════════════
+//  COUNTDOWN
+// ══════════════════════════════════════════════
+function tick() {
+  const target = new Date('2026-05-02T18:57:00-04:00');
+  const diff = target - Date.now();
+  if (diff <= 0) {
+    ['cd-days','cd-hours','cd-mins','cd-secs'].forEach((id, i) => {
+      document.getElementById(id).textContent = ['🏆','—','—','—'][i];
+    });
+    return;
+  }
+  document.getElementById('cd-days').textContent  = Math.floor(diff / 86400000);
+  document.getElementById('cd-hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+  document.getElementById('cd-mins').textContent  = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+  document.getElementById('cd-secs').textContent  = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+}
+
+// ══════════════════════════════════════════════
+//  EVENTS
+// ══════════════════════════════════════════════
+document.getElementById('modal-backdrop').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-backdrop')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+renderNews();
+renderStakes();
+renderUpcoming();
+renderPicks();
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
