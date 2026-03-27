@@ -1001,55 +1001,61 @@
 
 const newsData = [
   {
-    category: "Kentucky Derby",
-    title: "Derby Prep Season Heats Up: Blue Grass, Santa Anita Derby & Wood Memorial on Tap",
-    body: "The final four preps before Churchill Downs are set. Points leaders are jockeying for position with 100-50-25-15-10 on the line in each Championship Series race.",
-    date: "Mar 27, 2026",
-    url: "" // ← paste a link here to make it clickable
+    category: "Arkansas Derby · G1 🔥",
+    title: "Renegade Installed as 3-2 Favorite for $1.5M Arkansas Derby at Oaklawn",
+    body: "Todd Pletcher's Renegade heads an eight-horse field in the 90th Arkansas Derby. Silent Tactic (5-2), Litmus Test (5-1), and Blackout Time (6-1) are the other main contenders. The winner earns 100 Kentucky Derby points.",
+    date: "Mar 28, 2026",
+    url: ""
   },
   {
-    category: "Big Ten Connections",
-    title: "Six Big Ten-Affiliated Connections Poised for Strong Derby Showing",
-    body: "Trainers based in the Midwest continue to dominate Keeneland's spring numbers. Multiple Big Ten connections expected to feature heavily at Churchill Downs in May.",
-    date: "Mar 26, 2026",
+    category: "Florida Derby · G1 🔥",
+    title: "Chief Wallabee vs. Commandment: $1M Florida Derby at Gulfstream Shapes Up as Two-Horse War",
+    body: "Bill Mott's Chief Wallabee (2-1) and Brad Cox's Commandment (5-2) are the class of an eight-horse field in the 75th Curlin Florida Derby. Nearly (3/1) and Gregarious are the logical threats. Post time 6:42p ET, Race 14.",
+    date: "Mar 28, 2026",
+    url: ""
+  },
+  {
+    category: "This Weekend",
+    title: "Double-Barrel G1 Saturday: $2.5M in Derby Points on the Line at Oaklawn & Gulfstream",
+    body: "For the first time this prep season, two Grade 1 preps run on the same day. The Arkansas Derby and Florida Derby both go Saturday offering 100 points to the winner — critical positioning with Keeneland and Churchill Downs on the horizon.",
+    date: "Mar 27, 2026",
     url: ""
   },
   {
     category: "Keeneland",
-    title: "Keeneland Spring Meet Opens April 2 — Loaded Stakes Card Sets the Stage",
-    body: "The Blue Grass Stakes and Ben Ali will headline a premium stakes schedule at the Lexington oval. Turf course expected to be in excellent shape after a mild winter.",
+    title: "Keeneland Spring Meet Opens April 2 — Blue Grass Stakes Headlines Loaded Schedule",
+    body: "The Blue Grass Stakes (G1) and Ben Ali (G3) will headline a premium stakes schedule at the Lexington oval. Turf course expected to be in excellent shape after a mild winter.",
     date: "Mar 25, 2026",
     url: ""
   },
   {
     category: "Handicapping",
     title: "Pace Analysis Outperforming Speed Figures in Early Spring Returns",
-    body: "Early data from the 2026 prep circuit shows pace-pressers thriving on Keeneland turf, while pure closers remain vulnerable on sealed main tracks after recent rains.",
+    body: "Early data from the 2026 prep circuit shows pace-pressers thriving in the Championship Series preps, while pure closers remain vulnerable on sealed main tracks. Today's Arkansas Derby field is packed with pace — keep that in mind.",
     date: "Mar 24, 2026",
     url: ""
   },
   {
-    category: "Saratoga",
-    title: "The Spa Announces 40-Day Summer Meet — Whitney, Travers, Alabama All on Schedule",
-    body: "Saratoga opens July 16 through Labor Day. The Whitney and Travers anchor a deep summer card that figures to define the 2026 fall campaign.",
-    date: "Mar 22, 2026",
-    url: ""
-  },
-  {
     category: "Value Plays",
-    title: "First-Time Starters to Watch: Quality Barns Rolling Out Maidens at Keeneland Opener",
-    body: "Several well-bred debut runners from top training operations are set to run at the Keeneland spring opener. Workout tabs and barn buzz point to a few overlay opportunities.",
-    date: "Mar 20, 2026",
+    title: "Oaklawn Mile & Fantasy Stakes: Hidden Value on a Big Afternoon",
+    body: "While all eyes are on the Arkansas Derby, the $750K Fantasy Stakes for 3YO fillies and the $500K Oaklawn Mile for older horses round out a massive card. Both offer sharp handicapping opportunities at generous prices.",
+    date: "Mar 27, 2026",
     url: ""
   }
 ];
 
 const stakesData = [
+  // ── THIS WEEKEND ──
+  { date:"Mar 28 🔥", name:"Arkansas Derby",       track:"Oaklawn Park",    g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1.5M",  note:"Derby Prep (100 pts) · 6:48p CT", derby:true  },
+  { date:"Mar 28 🔥", name:"Curlin Florida Derby",  track:"Gulfstream Park", g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1M",    note:"Derby Prep (100 pts) · 6:42p ET", derby:true  },
+  { date:"Mar 28 🔥", name:"Fantasy Stakes",        track:"Oaklawn Park",    g:3, dist:"1 1/16m", surf:"Dirt", purse:"$750K",  note:"3YO Fillies · Oaks Road",         derby:false },
+  { date:"Mar 28 🔥", name:"Oaklawn Mile",          track:"Oaklawn Park",    g:3, dist:"1m",      surf:"Dirt", purse:"$500K",  note:"Older Horses",                    derby:false },
+  { date:"Mar 28 🔥", name:"Wilshire Stakes",       track:"Santa Anita",     g:3, dist:"1m",      surf:"Turf", purse:"$100K",  note:"F&M Turf · 1p PT",                derby:false },
+  // ── COMING UP ──
   { date:"Apr 4",  name:"Tampa Bay Derby",      track:"Tampa Bay Downs", g:2, dist:"1 1/16m", surf:"Dirt", purse:"$400K",  note:"Derby Prep (85 pts)", derby:true  },
   { date:"Apr 4",  name:"Santa Anita Oaks",     track:"Santa Anita",     g:1, dist:"1 1/16m", surf:"Dirt", purse:"$300K",  note:"Oaks Road",          derby:false },
   { date:"Apr 4",  name:"Turfway Park Spiral",  track:"Turfway Park",    g:3, dist:"1 1/8m",  surf:"Poly", purse:"$300K",  note:"Derby Prep (50 pts)", derby:true  },
   { date:"Apr 11", name:"Blue Grass Stakes",    track:"Keeneland",       g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1M",    note:"Derby Prep (100 pts) 🔥", derby:true  },
-  { date:"Apr 11", name:"Arkansas Derby",       track:"Oaklawn Park",    g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1.25M", note:"Derby Prep (100 pts) 🔥", derby:true  },
   { date:"Apr 11", name:"Wood Memorial",        track:"Aqueduct",        g:2, dist:"1 1/8m",  surf:"Dirt", purse:"$750K",  note:"Derby Prep (100 pts) 🔥", derby:true  },
   { date:"Apr 11", name:"Santa Anita Derby",    track:"Santa Anita",     g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1M",    note:"Derby Prep (100 pts) 🔥", derby:true  },
   { date:"Apr 18", name:"Ben Ali Stakes",       track:"Keeneland",       g:3, dist:"1 1/8m",  surf:"Dirt", purse:"$200K",  note:"4-yr-olds & up",     derby:false },
@@ -1059,12 +1065,12 @@ const stakesData = [
 ];
 
 const upcomingRaces = [
-  { track:"Keeneland",       date:"Apr 2–24, 2026",   name:"Spring Meet 2026",         chips:["18 Race Days","Stakes Daily","Turf & Dirt"],             purse:"Multiple $1M+ Stakes" },
-  { track:"Oaklawn Park",    date:"Ongoing thru May",  name:"Spring Racing",             chips:["Arkansas Derby Apr 11","G1 Action Weekly","Main Track"],  purse:"Ark. Derby $1.25M"    },
-  { track:"Santa Anita",     date:"Ongoing thru Jun",  name:"Spring Meet",               chips:["SA Derby Apr 11","Turf & Dirt Programs","G1/G2 Weekly"],  purse:"SA Derby $1M"         },
-  { track:"Churchill Downs", date:"Apr 25 – Jun 27",   name:"Spring Meet · Derby Week",  chips:["Opens Apr 25","Kentucky Derby May 2","Oaks May 1"],        purse:"Derby $5M"            },
-  { track:"Aqueduct",        date:"Ongoing thru Apr",  name:"Big A Spring",              chips:["Wood Memorial Apr 11","Final NYRA Prep","Main Track"],      purse:"Wood Mem. $750K"      },
-  { track:"Tampa Bay Downs", date:"Apr 4, 2026",       name:"Tampa Bay Derby (G2)",      chips:["Derby Prep","85 Derby Points","1 1/16 Miles"],             purse:"$400,000"             },
+  { track:"Oaklawn Park",    date:"🔥 Tomorrow — Mar 28", name:"Arkansas Derby Day (G1)",   chips:["Arkansas Derby G1","Fantasy Stakes G3","Oaklawn Mile G3","14-Race Card","Doors Open 10am"], purse:"$2.75M in Stakes" },
+  { track:"Gulfstream Park", date:"🔥 Tomorrow — Mar 28", name:"Curlin Florida Derby (G1)", chips:["Florida Derby G1","$2.45M Total Card","10 Stakes Races","Post Time 6:42p ET"],              purse:"$1,000,000 G1"    },
+  { track:"Santa Anita",     date:"Mar 28–29, 2026",   name:"Weekend Card",              chips:["Wilshire Stakes G3T","Sat & Sun 1p PT","Turf & Dirt"],   purse:"Wilshire $100K"       },
+  { track:"Keeneland",       date:"Apr 2–24, 2026",    name:"Spring Meet 2026",          chips:["18 Race Days","Blue Grass Apr 11","Turf & Dirt"],         purse:"Multiple $1M+ Stakes" },
+  { track:"Churchill Downs", date:"Apr 25 – Jun 27",   name:"Spring Meet · Derby Week",  chips:["Opens Apr 25","Kentucky Derby May 2","Oaks May 1"],       purse:"Derby $5M"            },
+  { track:"Santa Anita",     date:"Apr 11, 2026",      name:"Santa Anita Derby (G1)",    chips:["Derby Prep","100 Derby Points","G1 Action","1 1/8m"],     purse:"$1,000,000"           },
 ];
 
 // ══════════════════════════════════════════════
