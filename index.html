@@ -6,6 +6,9 @@
   <title>bennythebet | Horse Racing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <style>
     /* ── ROOT & RESET ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -743,6 +746,28 @@
     .field select option { background: #1a2a3a; color: var(--cream); }
     .modal-actions { display: flex; gap: 0.7rem; margin-top: 1.5rem; }
 
+    /* ── LIVE INDICATOR ── */
+    .live-dot {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #4cdb7a;
+    }
+    .live-dot::before {
+      content: '';
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #4cdb7a;
+      box-shadow: 0 0 6px #4cdb7a;
+      animation: pulse-live 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-live {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
     /* ── FOOTER ── */
     footer {
       background: rgba(8,14,22,0.98);
@@ -904,7 +929,7 @@
 <section id="picks" class="page-section">
   <div class="section-head">
     <h2>My Picks</h2>
-    <span class="section-pill active">Live Card</span>
+    <span class="live-dot" id="live-status">Connecting…</span>
   </div>
   <p class="picks-intro">
     Post your picks for any track and race below. Hit <strong style="color:var(--gold-light)">+ Add Pick</strong>,
@@ -1132,20 +1157,58 @@ function renderUpcoming() {
 }
 
 // ══════════════════════════════════════════════
-//  PICKS
+//  PICKS STATE
 // ══════════════════════════════════════════════
 let picks = [];
-try { picks = JSON.parse(localStorage.getItem('benny-picks') || '[]'); } catch(e) {}
-let editIdx = null;
+let editId = null;
 let activeFilter = 'all';
+let db = null;
+let picksCol = null;
 
-function persist() { localStorage.setItem('benny-picks', JSON.stringify(picks)); }
+// ══════════════════════════════════════════════
+//  FIREBASE INIT (safe — page renders even if Firebase fails)
+// ══════════════════════════════════════════════
+function initFirebase() {
+  try {
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6nESEWtK95PUeSaoHWXv0TYrCpVm5vQI",
+      authDomain: "bennythebet.firebaseapp.com",
+      projectId: "bennythebet",
+      storageBucket: "bennythebet.firebasestorage.app",
+      messagingSenderId: "849946766302",
+      appId: "1:849946766302:web:8a3dc377046d826d368b4f"
+    };
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    picksCol = db.collection('picks');
 
-function openModal(idx = null) {
-  editIdx = idx;
-  const editing = idx !== null;
+    // Listen for real-time changes — no orderBy to avoid index requirements,
+    // sort newest-first client-side instead
+    picksCol.onSnapshot(snapshot => {
+      picks = snapshot.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => {
+          const ta = a.ts ? (a.ts.seconds || 0) : 0;
+          const tb = b.ts ? (b.ts.seconds || 0) : 0;
+          return tb - ta;
+        });
+      document.getElementById('live-status').textContent = 'Live';
+      renderPicks();
+    }, err => {
+      document.getElementById('live-status').textContent = 'Offline';
+      console.error('Firestore error:', err);
+    });
+  } catch(e) {
+    console.error('Firebase init failed:', e);
+    document.getElementById('live-status').textContent = 'Offline';
+  }
+}
+
+function openModal(id = null) {
+  editId = id;
+  const editing = id !== null;
   document.getElementById('modal-title').textContent = editing ? 'Edit Pick' : 'Add a Pick';
-  const p = editing ? picks[idx] : {};
+  const p = editing ? (picks.find(p => p.id === id) || {}) : {};
   document.getElementById('f-track').value  = p.track  || '';
   document.getElementById('f-race').value   = p.race   || '';
   document.getElementById('f-horse').value  = p.horse  || '';
@@ -1160,13 +1223,14 @@ function openModal(idx = null) {
 
 function closeModal() {
   document.getElementById('modal-backdrop').classList.remove('show');
-  editIdx = null;
+  editId = null;
 }
 
 function savePick() {
   const track = document.getElementById('f-track').value.trim();
   const horse = document.getElementById('f-horse').value.trim();
   if (!track || !horse) { alert('Track and horse name are required.'); return; }
+  if (!picksCol) { alert('Not connected to database. Please refresh and try again.'); return; }
   const pick = {
     track, horse,
     race:  document.getElementById('f-race').value.trim()  || '—',
@@ -1175,26 +1239,30 @@ function savePick() {
     units: document.getElementById('f-units').value.trim(),
     url:   document.getElementById('f-url').value.trim(),
     note:  document.getElementById('f-note').value.trim(),
-    date:  new Date().toLocaleDateString('en-US', { month:'short', day:'numeric' })
+    date:  new Date().toLocaleDateString('en-US', { month:'short', day:'numeric' }),
+    ts:    firebase.firestore.FieldValue.serverTimestamp()
   };
-  if (editIdx !== null) picks[editIdx] = pick;
-  else picks.unshift(pick);
-  persist();
-  renderPicks();
+  if (editId !== null) {
+    picksCol.doc(editId).set(pick);
+  } else {
+    picksCol.add(pick);
+  }
   closeModal();
+  // onSnapshot handles re-render automatically
 }
 
-function deletePick(idx) {
+function deletePick(id) {
   if (!confirm('Remove this pick?')) return;
-  picks.splice(idx, 1);
-  persist();
-  renderPicks();
+  if (picksCol) picksCol.doc(id).delete();
 }
 
 function confirmClear() {
   if (!picks.length) return;
   if (!confirm('Clear all picks? This cannot be undone.')) return;
-  picks = []; persist(); renderPicks();
+  if (!db || !picksCol) return;
+  const batch = db.batch();
+  picks.forEach(p => batch.delete(picksCol.doc(p.id)));
+  batch.commit();
 }
 
 function setFilter(val, el) {
@@ -1205,7 +1273,6 @@ function setFilter(val, el) {
 }
 
 function renderPicks() {
-  // rebuild filter bar
   const tracks = ['all', ...new Set(picks.map(p => p.track))];
   const bar = document.getElementById('picks-filter');
   bar.innerHTML = tracks.map(t =>
@@ -1231,9 +1298,7 @@ function renderPickCards() {
     return;
   }
 
-  board.innerHTML = `<div class="picks-grid">${list.map(p => {
-    const realIdx = picks.indexOf(p);
-    return `
+  board.innerHTML = `<div class="picks-grid">${list.map(p => `
       <div class="pick-card">
         <div class="pick-header">
           <div class="pick-track-label">${p.track}</div>
@@ -1249,12 +1314,11 @@ function renderPickCards() {
         <div class="pick-footer">
           <div class="pick-date">${p.date}</div>
           <div class="pick-actions">
-            <button class="btn-edit" onclick="openModal(${realIdx})">Edit</button>
-            <button class="btn-del"  onclick="deletePick(${realIdx})">✕</button>
+            <button class="btn-edit" onclick="openModal('${p.id}')">Edit</button>
+            <button class="btn-del"  onclick="deletePick('${p.id}')">✕</button>
           </div>
         </div>
-      </div>`;
-  }).join('')}</div>`;
+      </div>`).join('')}</div>`;
 }
 
 // ══════════════════════════════════════════════
@@ -1286,12 +1350,15 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 // ══════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════
+// Render static content immediately — never blocked by Firebase
 renderNews();
 renderStakes();
 renderUpcoming();
-renderPicks();
+renderPicks(); // shows empty state until Firestore responds
 tick();
 setInterval(tick, 1000);
+// Connect to Firebase after page is painted
+initFirebase();
 </script>
 </body>
 </html>
