@@ -1,1364 +1,760 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bennythebet | Horse Racing</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <style>
-    /* ── ROOT & RESET ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --navy:        #0b1622;
-      --navy-mid:    #102030;
-      --navy-light:  #1a3048;
-      --forest:      #0f2d1f;
-      --forest-mid:  #174030;
-      --gold:        #b8962a;
-      --gold-light:  #d4b04a;
-      --gold-pale:   #e8d49a;
-      --cream:       #f0e8d4;
-      --cream-dark:  #d4c8a8;
-      --burgundy:    #6b1f2a;
-      --ivory:       #faf6ee;
-      --white:       #ffffff;
-      --text-primary:#e8dfc8;
-      --text-muted:  #8a8070;
-      --text-dim:    #5a5248;
-      --border:      rgba(184,150,42,0.2);
-      --border-light:rgba(184,150,42,0.08);
-      --card-bg:     rgba(16,32,48,0.9);
-      --serif:       'Playfair Display', Georgia, serif;
-      --sans:        'Inter', system-ui, sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BennyTheBet — Horse Racing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0b1622;
+  --navy2: #111e2d;
+  --navy3: #162436;
+  --gold: #b8962a;
+  --gold-light: #d4af3c;
+  --cream: #f0e8d4;
+  --cream2: #e8dcc8;
+  --cream3: #d9ccb4;
+  --white: #ffffff;
+  --muted: #7a8fa6;
+  --border: rgba(184,150,42,0.18);
+  --border-cream: rgba(184,150,42,0.35);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
 
-    html { scroll-behavior: smooth; }
+/* NAV */
+nav {
+  background: var(--navy);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+.nav-brand span { color: var(--cream); font-weight: 400; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
 
-    body {
-      font-family: var(--serif);
-      background: var(--navy);
-      color: var(--text-primary);
-      min-height: 100vh;
-      line-height: 1.7;
-    }
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy3) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 24px 40px;
+  text-align: center;
+}
+.hero-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero-title em { color: var(--gold); font-style: italic; }
+.hero-sub {
+  color: var(--muted);
+  font-size: 0.92rem;
+  max-width: 520px;
+  margin: 0 auto 28px;
+}
+.countdown-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 28px;
+  font-size: 0.8rem;
+}
+.countdown-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.countdown-unit { text-align: center; }
+.countdown-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+}
+.countdown-unit-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.countdown-divider { color: var(--gold); opacity: 0.4; font-size: 1.2rem; }
 
-    /* Subtle grain texture */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      opacity: 0.4;
-    }
+/* SECTION */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+.section-meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+.section-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+}
 
-    * { position: relative; z-index: 1; }
+/* NEWS GRID */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-cream);
+  border: 1px solid var(--border-cream);
+}
+.news-card {
+  background: var(--cream);
+  color: var(--navy);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.news-card:hover { background: var(--cream2); }
+a.news-card { cursor: pointer; }
+a.news-card .news-title::after {
+  content: ' ↗';
+  font-size: 0.75em;
+  opacity: 0.5;
+}
+.news-category {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.news-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.news-body {
+  font-size: 0.82rem;
+  color: #3a4a5c;
+  line-height: 1.55;
+  flex: 1;
+}
+.news-date {
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-top: 12px;
+  letter-spacing: 0.06em;
+}
 
-    a { color: var(--gold-light); text-decoration: none; transition: color 0.2s; }
-    a:hover { color: var(--gold-pale); }
+/* STAKES TABLE */
+.stakes-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-cream);
+}
+.stakes-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--cream);
+  color: var(--navy);
+  font-size: 0.82rem;
+}
+.stakes-table thead {
+  background: var(--navy);
+  color: var(--gold);
+}
+.stakes-table th {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.stakes-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--cream3);
+  vertical-align: top;
+}
+.stakes-table tr:last-child td { border-bottom: none; }
+.stakes-table tr:hover td { background: var(--cream2); }
+.grade-chip {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 2px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.grade-g1 { background: var(--gold); color: var(--navy); }
+.grade-g2 { background: var(--navy3); color: var(--gold); border: 1px solid var(--gold); }
+.grade-g3 { background: transparent; color: var(--muted); border: 1px solid var(--cream3); }
+.race-date-col { white-space: nowrap; color: var(--muted); font-size: 0.78rem; }
+.notes-col { color: #5a6a7a; font-style: italic; font-size: 0.78rem; }
+.purse-col { font-weight: 600; white-space: nowrap; }
 
-    /* ── NAV ── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(11,22,34,0.97);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 68px;
-      box-shadow: 0 1px 30px rgba(0,0,0,0.5);
-    }
+/* UPCOMING CARDS */
+.upcoming-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.track-card {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+}
+.track-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.track-date {
+  font-size: 0.72rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.track-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.track-chip {
+  background: var(--navy3);
+  color: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.track-chip.featured { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 700; }
+.track-purse { font-size: 0.75rem; color: var(--muted); }
+.track-purse strong { color: var(--cream); }
 
-    .nav-brand {
-      display: flex; align-items: center; gap: 0.75rem;
-    }
-    .nav-logo-mark {
-      width: 36px; height: 36px;
-      border: 1.5px solid var(--gold);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
-      background: rgba(184,150,42,0.08);
-    }
-    .nav-brand-text {
-      font-family: var(--serif);
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--cream);
-      letter-spacing: 0.5px;
-    }
-    .nav-brand-text em {
-      color: var(--gold);
-      font-style: italic;
-    }
-    .nav-brand-sub {
-      font-family: var(--sans);
-      font-size: 0.6rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      display: block;
-      margin-top: -2px;
-    }
+/* PICKS BOARD */
+.picks-board {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.picks-header {
+  background: var(--navy);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.picks-header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--cream);
+  font-weight: 700;
+}
+.live-dot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.live-dot::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4caf50;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.picks-list { padding: 0; }
+.pick-item {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+}
+.pick-item:last-child { border-bottom: none; }
+.pick-race-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 28px;
+  text-align: center;
+}
+.pick-info {}
+.pick-track {
+  font-size: 0.68rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.pick-horse {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+.pick-type { font-size: 0.76rem; color: var(--muted); }
+.pick-odds {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: right;
+}
+.pick-units { font-size: 0.7rem; color: var(--muted); text-align: right; }
+.picks-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
 
-    .nav-links {
-      display: flex; gap: 2rem; list-style: none;
-      align-items: center;
-    }
-    .nav-links a {
-      font-family: var(--sans);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--gold-light); }
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+footer strong { color: var(--gold); }
+.footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 10px; }
+.footer-links a { color: var(--muted); text-decoration: none; }
+.footer-links a:hover { color: var(--gold); }
 
-    .nav-cta {
-      font-family: var(--sans);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: var(--gold);
-      padding: 7px 16px;
-      border-radius: 2px;
-      transition: background 0.2s;
-    }
-    .nav-cta:hover { background: var(--gold-light); color: var(--navy); }
-
-    /* ── HERO ── */
-    .hero {
-      background:
-        linear-gradient(180deg, rgba(11,22,34,0) 0%, rgba(11,22,34,0.7) 60%, var(--navy) 100%),
-        linear-gradient(135deg, #0b1f10 0%, #0d1e30 50%, #1a0a12 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 5rem 2rem 4rem;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    /* Decorative lines */
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%; transform: translateX(-50%);
-      width: 1px; height: 60px;
-      background: linear-gradient(to bottom, transparent, var(--gold));
-      opacity: 0.4;
-    }
-
-    .hero-eyebrow {
-      font-family: var(--sans);
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-      display: flex; align-items: center; justify-content: center; gap: 1rem;
-    }
-    .hero-eyebrow::before, .hero-eyebrow::after {
-      content: '';
-      display: inline-block;
-      width: 40px; height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-    }
-
-    .hero h1 {
-      font-family: var(--serif);
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 700;
-      color: var(--ivory);
-      line-height: 1.05;
-      letter-spacing: -1px;
-      margin-bottom: 0.5rem;
-    }
-    .hero h1 .italic-accent {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-
-    .hero-tagline {
-      font-family: var(--sans);
-      font-size: 0.8rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 3rem;
-    }
-
-    .derby-card {
-      display: inline-block;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1.5rem 2.5rem;
-      margin-bottom: 2.5rem;
-    }
-    .derby-card-label {
-      font-family: var(--sans);
-      font-size: 0.6rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.8rem;
-    }
-    .derby-countdown {
-      display: flex; gap: 2rem; align-items: center;
-    }
-    .countdown-unit { text-align: center; }
-    .countdown-num {
-      display: block;
-      font-family: var(--serif);
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: var(--gold-pale);
-      line-height: 1;
-    }
-    .countdown-sep {
-      font-family: var(--serif);
-      font-size: 2rem;
-      color: var(--gold);
-      opacity: 0.4;
-      margin-bottom: 1.2rem;
-    }
-    .countdown-label {
-      font-family: var(--sans);
-      font-size: 0.58rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-top: 2px;
-    }
-
-    .hero-meta {
-      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
-    }
-    .hero-meta-item {
-      font-family: var(--sans);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
-    .hero-meta-item strong {
-      display: block;
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2px;
-    }
-
-    /* ── DECORATIVE RULE ── */
-    .ornamental-rule {
-      display: flex; align-items: center; gap: 1rem;
-      padding: 0 2.5rem;
-      max-width: 1200px; margin: 0 auto;
-    }
-    .ornamental-rule::before, .ornamental-rule::after {
-      content: ''; flex: 1; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-    }
-    .ornamental-rule .diamond {
-      color: var(--gold);
-      font-size: 0.5rem;
-      opacity: 0.5;
-    }
-
-    /* ── PAGE WRAPPER ── */
-    .page-section {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 3.5rem 2rem;
-    }
-
-    /* ── SECTION HEADERS ── */
-    .section-head {
-      display: flex; align-items: baseline; gap: 1.2rem;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .section-head h2 {
-      font-family: var(--serif);
-      font-size: 1.7rem;
-      font-weight: 600;
-      color: var(--ivory);
-      letter-spacing: -0.3px;
-    }
-    .section-pill {
-      font-family: var(--sans);
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid var(--gold);
-      padding: 3px 10px;
-      border-radius: 2px;
-      opacity: 0.8;
-    }
-    .section-pill.active {
-      background: var(--gold);
-      color: var(--navy);
-      opacity: 1;
-    }
-
-    /* ── NEWS ── */
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1px;
-      background: var(--border-light);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .news-card {
-      background: var(--card-bg);
-      padding: 1.6rem;
-      cursor: pointer;
-      transition: background 0.2s;
-      display: block;
-      text-decoration: none;
-      color: inherit;
-    }
-    .news-card:hover { background: rgba(184,150,42,0.06); }
-
-    .news-category {
-      font-family: var(--sans);
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.6rem;
-    }
-
-    .news-card h3 {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--ivory);
-      line-height: 1.45;
-      margin-bottom: 0.5rem;
-    }
-
-    .news-card p {
-      font-family: var(--sans);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    .news-meta {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 1rem;
-      padding-top: 0.8rem;
-      border-top: 1px solid var(--border-light);
-    }
-    .news-date {
-      font-family: var(--sans);
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      letter-spacing: 0.5px;
-    }
-    .news-read-more {
-      font-family: var(--sans);
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    .news-card:hover .news-read-more { opacity: 1; }
-    .news-notice {
-      font-family: var(--sans);
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      text-align: right;
-      margin-top: 0.8rem;
-      font-style: italic;
-    }
-
-    /* ── STAKES TABLE ── */
-    .stakes-wrap {
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .stakes-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: var(--sans);
-      font-size: 0.82rem;
-    }
-    .stakes-table thead {
-      background: rgba(184,150,42,0.08);
-      border-bottom: 1px solid var(--border);
-    }
-    .stakes-table th {
-      padding: 0.7rem 1rem;
-      text-align: left;
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .stakes-table tbody tr {
-      border-bottom: 1px solid var(--border-light);
-      transition: background 0.15s;
-    }
-    .stakes-table tbody tr:hover { background: rgba(184,150,42,0.04); }
-    .stakes-table tbody tr:last-child { border-bottom: none; }
-    .stakes-table td {
-      padding: 0.75rem 1rem;
-      color: var(--text-primary);
-      vertical-align: middle;
-    }
-
-    .grade-pip {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      font-size: 0.68rem; font-weight: 700;
-      font-family: var(--sans);
-    }
-    .g1 { background: var(--gold); color: var(--navy); }
-    .g2 { background: #8a8a8a; color: #fff; }
-    .g3 { background: #9b6f3a; color: #fff; }
-
-    .surface-dot {
-      display: inline-block; width: 8px; height: 8px;
-      border-radius: 50%; margin-right: 5px;
-    }
-    .dot-turf  { background: #3aaa3a; }
-    .dot-dirt  { background: #b07830; }
-    .dot-poly  { background: #7070aa; }
-
-    .race-name-cell { color: var(--ivory); font-weight: 500; }
-    .track-cell { color: var(--text-muted); }
-    .purse-cell { color: #6adb6a; font-weight: 500; }
-    .note-cell { color: var(--text-dim); font-style: italic; font-size: 0.75rem; }
-    .derby-row { background: rgba(184,150,42,0.05); }
-
-    /* ── UPCOMING CARDS ── */
-    .upcoming-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1px;
-      background: var(--border-light);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .race-card {
-      background: var(--card-bg);
-      padding: 1.4rem;
-      transition: background 0.2s;
-    }
-    .race-card:hover { background: rgba(184,150,42,0.05); }
-    .race-card-top {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      margin-bottom: 0.8rem;
-    }
-    .race-track-name {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--ivory);
-    }
-    .race-date-tag {
-      font-family: var(--sans);
-      font-size: 0.6rem;
-      color: var(--text-dim);
-      letter-spacing: 0.5px;
-      text-align: right;
-    }
-    .race-card-name {
-      font-family: var(--sans);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.8rem;
-    }
-    .race-chips {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-      margin-bottom: 0.8rem;
-    }
-    .chip {
-      font-family: var(--sans);
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border-light);
-      padding: 2px 8px;
-      border-radius: 2px;
-    }
-    .race-purse-line {
-      font-family: var(--sans);
-      font-size: 0.72rem;
-      color: #6adb6a;
-    }
-
-    /* ── PICKS ── */
-    .picks-intro {
-      font-family: var(--sans);
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      line-height: 1.8;
-    }
-    .picks-toolbar {
-      display: flex; align-items: center; gap: 0.8rem;
-      margin-bottom: 1.5rem; flex-wrap: wrap;
-    }
-    .btn {
-      font-family: var(--sans);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 0.55rem 1.2rem;
-      border-radius: 2px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .btn-primary {
-      background: var(--gold);
-      color: var(--navy);
-    }
-    .btn-primary:hover { background: var(--gold-light); }
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-    }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-    .btn-link {
-      background: transparent; border: none;
-      color: var(--text-dim); font-size: 0.65rem;
-      text-decoration: underline; cursor: pointer;
-      padding: 0;
-    }
-    .btn-link:hover { color: #e74c3c; }
-
-    .picks-filter-bar {
-      display: flex; gap: 0.4rem; flex-wrap: wrap;
-      margin-bottom: 1.2rem;
-    }
-    .filter-btn {
-      font-family: var(--sans);
-      font-size: 0.65rem; font-weight: 500;
-      letter-spacing: 1px; text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 2px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-dim);
-      cursor: pointer; transition: all 0.15s;
-    }
-    .filter-btn:hover { border-color: var(--gold); color: var(--gold-light); }
-    .filter-btn.on { background: var(--gold); border-color: var(--gold); color: var(--navy); }
-
-    .picks-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1px;
-      background: var(--border-light);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .pick-card {
-      background: var(--card-bg);
-      padding: 1.3rem;
-      transition: background 0.15s;
-    }
-    .pick-card:hover { background: rgba(184,150,42,0.05); }
-
-    .pick-header {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      margin-bottom: 0.6rem;
-    }
-    .pick-track-label {
-      font-family: var(--sans);
-      font-size: 0.6rem; font-weight: 600;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      color: var(--gold);
-    }
-    .pick-race-tag {
-      font-family: var(--sans);
-      font-size: 0.6rem;
-      color: var(--text-dim);
-      border: 1px solid var(--border-light);
-      padding: 1px 7px; border-radius: 2px;
-    }
-    .pick-horse {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--ivory);
-      margin-bottom: 0.5rem;
-      line-height: 1.3;
-    }
-    .pick-badges {
-      display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    .pick-bet-badge {
-      font-family: var(--sans);
-      font-size: 0.62rem; font-weight: 600;
-      letter-spacing: 1px; text-transform: uppercase;
-      background: rgba(184,150,42,0.15);
-      border: 1px solid rgba(184,150,42,0.3);
-      color: var(--gold-light);
-      padding: 2px 8px; border-radius: 2px;
-    }
-    .pick-odds-val {
-      font-family: var(--sans);
-      font-size: 0.82rem; font-weight: 600;
-      color: #6adb6a;
-    }
-    .pick-units {
-      font-family: var(--sans);
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-    .pick-note {
-      font-family: var(--sans);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      font-style: italic;
-      margin-top: 0.4rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid var(--border-light);
-      line-height: 1.6;
-    }
-    .pick-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 0.8rem;
-    }
-    .pick-date { font-family: var(--sans); font-size: 0.62rem; color: var(--text-dim); }
-    .pick-actions { display: flex; gap: 0.5rem; }
-    .btn-edit, .btn-del {
-      font-family: var(--sans);
-      font-size: 0.6rem; font-weight: 600;
-      letter-spacing: 0.5px;
-      padding: 3px 9px; border-radius: 2px;
-      border: 1px solid;
-      cursor: pointer; transition: all 0.15s;
-      background: transparent;
-    }
-    .btn-edit { border-color: var(--border); color: var(--text-muted); }
-    .btn-edit:hover { border-color: var(--gold); color: var(--gold); }
-    .btn-del { border-color: rgba(180,40,40,0.3); color: rgba(220,80,80,0.7); }
-    .btn-del:hover { border-color: #c0392b; color: #e74c3c; background: rgba(192,57,43,0.08); }
-
-    .picks-empty {
-      border: 1px dashed rgba(184,150,42,0.2);
-      border-radius: 4px; padding: 3.5rem;
-      text-align: center;
-    }
-    .picks-empty-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5; }
-    .picks-empty p {
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      line-height: 1.8;
-    }
-
-    /* ── MODAL ── */
-    .modal-backdrop {
-      display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(5,10,16,0.85);
-      backdrop-filter: blur(6px);
-      align-items: center; justify-content: center;
-    }
-    .modal-backdrop.show { display: flex; }
-    .modal-box {
-      background: var(--navy-mid);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2rem;
-      width: min(500px, 94vw);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-    }
-    .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.8rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .modal-title {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      color: var(--ivory);
-    }
-    .modal-close {
-      font-family: var(--sans); font-size: 1.2rem;
-      background: none; border: none;
-      color: var(--text-dim); cursor: pointer;
-      line-height: 1; padding: 2px 6px;
-      transition: color 0.15s;
-    }
-    .modal-close:hover { color: var(--text-muted); }
-
-    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-    .field { margin-bottom: 0.9rem; }
-    .field label {
-      display: block;
-      font-family: var(--sans);
-      font-size: 0.6rem; font-weight: 600;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.35rem;
-    }
-    .field input, .field select, .field textarea {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 2px;
-      padding: 0.5rem 0.75rem;
-      color: var(--cream);
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      transition: border-color 0.15s;
-    }
-    .field input::placeholder, .field textarea::placeholder { color: var(--text-dim); }
-    .field input:focus, .field select:focus, .field textarea:focus {
-      outline: none; border-color: var(--gold);
-    }
-    .field select option { background: #1a2a3a; color: var(--cream); }
-    .modal-actions { display: flex; gap: 0.7rem; margin-top: 1.5rem; }
-
-    /* ── LIVE INDICATOR ── */
-    .live-dot {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      font-family: var(--sans);
-      font-size: 0.6rem; font-weight: 600;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: #4cdb7a;
-    }
-    .live-dot::before {
-      content: '';
-      display: inline-block;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #4cdb7a;
-      box-shadow: 0 0 6px #4cdb7a;
-      animation: pulse-live 1.8s ease-in-out infinite;
-    }
-    @keyframes pulse-live {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: rgba(8,14,22,0.98);
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 2rem;
-      text-align: center;
-    }
-    .footer-logo {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      font-style: italic;
-      color: var(--gold);
-      margin-bottom: 0.4rem;
-    }
-    .footer-sub {
-      font-family: var(--sans);
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 1rem;
-    }
-    .footer-disclaimer {
-      font-family: var(--sans);
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      max-width: 520px; margin: 0 auto;
-      line-height: 1.7; opacity: 0.6;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .nav-cta { display: none; }
-      nav { padding: 0 1.2rem; }
-      .form-grid-2 { grid-template-columns: 1fr; }
-      .derby-countdown { gap: 1rem; }
-      .countdown-num { font-size: 2rem; }
-    }
-  </style>
+@media (max-width: 900px) {
+  .news-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .news-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .countdown-bar { gap: 14px; padding: 10px 16px; }
+}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-brand">
-    <div class="nav-logo-mark">🏇</div>
-    <div>
-      <div class="nav-brand-text">benny<em>thebet</em></div>
-      <span class="nav-brand-sub">Horse Racing</span>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">BennyTheBet <span>Racing</span></a>
+    <div class="nav-links">
+      <a href="#news">News</a>
+      <a href="#stakes">Stakes</a>
+      <a href="#upcoming">Cards</a>
+      <a href="#picks">My Picks</a>
     </div>
   </div>
-  <ul class="nav-links">
-    <li><a href="#news">News</a></li>
-    <li><a href="#stakes">Stakes</a></li>
-    <li><a href="#upcoming">Upcoming</a></li>
-    <li><a href="#picks">My Picks</a></li>
-  </ul>
-  <a href="#picks" class="nav-cta">+ Add Pick</a>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-eyebrow">🏆 Kentucky Derby Season 2026</div>
-  <h1>benny<span class="italic-accent">thebet</span></h1>
-  <p class="hero-tagline">Horse Racing · Picks · Analysis</p>
-
-  <div class="derby-card">
-    <div class="derby-card-label">Countdown to the Kentucky Derby — May 2, 2026</div>
-    <div class="derby-countdown">
-      <div class="countdown-unit">
-        <span class="countdown-num" id="cd-days">—</span>
-        <div class="countdown-label">Days</div>
-      </div>
-      <div class="countdown-sep">:</div>
-      <div class="countdown-unit">
-        <span class="countdown-num" id="cd-hours">—</span>
-        <div class="countdown-label">Hours</div>
-      </div>
-      <div class="countdown-sep">:</div>
-      <div class="countdown-unit">
-        <span class="countdown-num" id="cd-mins">—</span>
-        <div class="countdown-label">Mins</div>
-      </div>
-      <div class="countdown-sep">:</div>
-      <div class="countdown-unit">
-        <span class="countdown-num" id="cd-secs">—</span>
-        <div class="countdown-label">Secs</div>
-      </div>
+<div class="hero">
+  <div class="hero-eyebrow">Road to the Kentucky Derby · 2026</div>
+  <h1 class="hero-title">The Sport of <em>Kings</em></h1>
+  <p class="hero-sub">Daily handicapping, Derby trail coverage, and real-time picks from @bennythebet.</p>
+  <div class="countdown-bar">
+    <div class="countdown-label">Kentucky Derby</div>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-days">--</span>
+      <span class="countdown-unit-label">Days</span>
+    </div>
+    <span class="countdown-divider">:</span>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-hours">--</span>
+      <span class="countdown-unit-label">Hrs</span>
+    </div>
+    <span class="countdown-divider">:</span>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-mins">--</span>
+      <span class="countdown-unit-label">Min</span>
+    </div>
+    <span class="countdown-divider">:</span>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-secs">--</span>
+      <span class="countdown-unit-label">Sec</span>
     </div>
   </div>
-
-  <div class="hero-meta">
-    <div class="hero-meta-item"><strong>Edition</strong>152nd Run for the Roses</div>
-    <div class="hero-meta-item"><strong>Venue</strong>Churchill Downs, Louisville KY</div>
-    <div class="hero-meta-item"><strong>Post Time</strong>~6:57 PM ET</div>
-    <div class="hero-meta-item"><strong>Purse</strong>$5,000,000</div>
-  </div>
-</section>
-
-<!-- DIVIDER -->
-<div class="ornamental-rule" style="padding: 1.5rem 2.5rem;">
-  <span class="diamond">◆</span>
 </div>
 
 <!-- NEWS -->
-<section id="news" class="page-section">
-  <div class="section-head">
-    <h2>Racing News</h2>
-    <span class="section-pill">Latest</span>
+<section class="section" id="news">
+  <div class="section-header">
+    <h2 class="section-title">Racing News</h2>
+    <div class="section-divider"></div>
+    <span class="section-meta" id="news-date-label">Today</span>
   </div>
   <div class="news-grid" id="news-grid"></div>
-  <p class="news-notice">
-    Headlines are curated — click to open the full story when a link is available.
-    To add or edit stories, update the <code style="font-size:0.7rem;color:var(--gold)">newsData</code> array in the source.
-  </p>
 </section>
 
-<div class="ornamental-rule"><span class="diamond">◆</span></div>
-
 <!-- STAKES SCHEDULE -->
-<section id="stakes" class="page-section">
-  <div class="section-head">
-    <h2>Graded Stakes Schedule</h2>
-    <span class="section-pill">Spring 2026</span>
+<section class="section" id="stakes">
+  <div class="section-header">
+    <h2 class="section-title">Stakes Schedule</h2>
+    <div class="section-divider"></div>
+    <span class="section-meta">Graded Stakes · Derby Trail</span>
   </div>
-  <div class="stakes-wrap" style="overflow-x:auto">
-    <table class="stakes-table">
+  <div class="stakes-table-wrap">
+    <table class="stakes-table" id="stakes-table">
       <thead>
         <tr>
           <th>Date</th>
           <th>Race</th>
+          <th>Grade</th>
           <th>Track</th>
-          <th>Gr</th>
-          <th>Distance · Surface</th>
+          <th>Dist / Surface</th>
           <th>Purse</th>
+          <th>Pts</th>
           <th>Notes</th>
         </tr>
       </thead>
-      <tbody id="stakes-body"></tbody>
+      <tbody id="stakes-tbody"></tbody>
     </table>
   </div>
 </section>
 
-<div class="ornamental-rule"><span class="diamond">◆</span></div>
-
-<!-- UPCOMING RACES -->
-<section id="upcoming" class="page-section">
-  <div class="section-head">
-    <h2>Upcoming Cards</h2>
-    <span class="section-pill active">This Week</span>
+<!-- UPCOMING CARDS -->
+<section class="section" id="upcoming">
+  <div class="section-header">
+    <h2 class="section-title">Upcoming Cards</h2>
+    <div class="section-divider"></div>
+    <span class="section-meta">Track by Track</span>
   </div>
   <div class="upcoming-grid" id="upcoming-grid"></div>
 </section>
 
-<div class="ornamental-rule"><span class="diamond">◆</span></div>
-
-<!-- MY PICKS -->
-<section id="picks" class="page-section">
-  <div class="section-head">
-    <h2>My Picks</h2>
-    <span class="live-dot" id="live-status">Connecting…</span>
+<!-- PICKS -->
+<section class="section" id="picks">
+  <div class="section-header">
+    <h2 class="section-title">My Picks</h2>
+    <div class="section-divider"></div>
+    <span class="section-meta">Live · @bennythebet</span>
   </div>
-  <p class="picks-intro">
-    Post your picks for any track and race below. Hit <strong style="color:var(--gold-light)">+ Add Pick</strong>,
-    fill in the details, and they'll appear on the board instantly. Picks are saved locally — they stay between sessions.
-  </p>
-  <div class="picks-toolbar">
-    <button class="btn btn-primary" onclick="openModal()">+ Add Pick</button>
-    <button class="btn btn-ghost" onclick="confirmClear()">Clear All</button>
+  <div class="picks-board">
+    <div class="picks-header">
+      <div class="picks-header-title">Active Plays</div>
+      <div class="live-dot">Live</div>
+    </div>
+    <div class="picks-list" id="picks-list">
+      <div class="picks-empty">Loading picks…</div>
+    </div>
   </div>
-  <div class="picks-filter-bar" id="picks-filter"></div>
-  <div id="picks-board"></div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">bennythebet</div>
-  <div class="footer-sub">Horse Racing Picks &amp; Insights · @bennythebet</div>
-  <p class="footer-disclaimer">
-    For entertainment purposes only. Must be 21+ to wager. bennythebet does not operate
-    as a licensed sportsbook. Always verify odds with your bookmaker. Please gamble responsibly.
-  </p>
+  <p><strong>BennyTheBet Racing</strong> — Handicapping & Horse Racing Picks</p>
+  <p style="margin-top:6px">Not financial advice. Bet responsibly. 21+</p>
+  <div class="footer-links">
+    <a href="https://x.com/bennythebet" target="_blank">@bennythebet on X</a>
+    <a href="https://bsestak23.github.io/bennythebet-racing/" target="_blank">Live Site</a>
+  </div>
 </footer>
 
-<!-- PICK MODAL -->
-<div class="modal-backdrop" id="modal-backdrop">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div class="modal-title" id="modal-title">Add a Pick</div>
-      <button class="modal-close" onclick="closeModal()">×</button>
-    </div>
-    <div class="form-grid-2">
-      <div class="field">
-        <label>Track *</label>
-        <input id="f-track" type="text" placeholder="e.g. Keeneland" />
-      </div>
-      <div class="field">
-        <label>Race #</label>
-        <input id="f-race" type="text" placeholder="e.g. Race 7" />
-      </div>
-    </div>
-    <div class="field">
-      <label>Horse Name *</label>
-      <input id="f-horse" type="text" placeholder="e.g. Sovereignty" />
-    </div>
-    <div class="form-grid-2">
-      <div class="field">
-        <label>Bet Type</label>
-        <select id="f-bet">
-          <option>Win</option>
-          <option>Place</option>
-          <option>Show</option>
-          <option>Win / Place</option>
-          <option>Exacta</option>
-          <option>Trifecta</option>
-          <option>Superfecta</option>
-          <option>Daily Double</option>
-          <option>Pick 3</option>
-          <option>Pick 4</option>
-          <option>Pick 5</option>
-          <option>Pick 6</option>
-          <option>Parlay</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Odds / Price</label>
-        <input id="f-odds" type="text" placeholder="e.g. 7/2 or +350" />
-      </div>
-    </div>
-    <div class="form-grid-2">
-      <div class="field">
-        <label>Units / Confidence</label>
-        <input id="f-units" type="text" placeholder="e.g. 2u · Lock · ⭐⭐" />
-      </div>
-      <div class="field">
-        <label>Article URL (optional)</label>
-        <input id="f-url" type="text" placeholder="https://..." />
-      </div>
-    </div>
-    <div class="field">
-      <label>Analysis / Notes</label>
-      <textarea id="f-note" rows="2" placeholder="Brief reason for the pick..."></textarea>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-primary" onclick="savePick()">Save Pick</button>
-      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-    </div>
-  </div>
-</div>
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, collection, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBennyTheBetFirebaseKey",
+    authDomain: "bennythebet.firebaseapp.com",
+    projectId: "bennythebet",
+    storageBucket: "bennythebet.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:bennythebet"
+  };
+
+  try {
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const q = query(collection(db, 'picks'), orderBy('ts', 'desc'));
+
+    onSnapshot(q, (snap) => {
+      const list = document.getElementById('picks-list');
+      if (snap.empty) {
+        list.innerHTML = '<div class="picks-empty">No active picks right now. Check back soon.</div>';
+        return;
+      }
+      list.innerHTML = snap.docs.map((doc, i) => {
+        const p = doc.data();
+        const tag = p.url ? 'a' : 'div';
+        const attrs = p.url ? `href="${p.url}" target="_blank" rel="noopener"` : '';
+        return `<${tag} class="pick-item" ${attrs} style="${p.url ? 'text-decoration:none;' : ''}">
+          <div class="pick-race-num">R${p.race || i+1}</div>
+          <div class="pick-info">
+            <div class="pick-track">${p.track || ''}</div>
+            <div class="pick-horse">${p.horse || ''}</div>
+            <div class="pick-type">${p.bet_type || ''}${p.notes ? ' · ' + p.notes : ''}</div>
+          </div>
+          <div>
+            <div class="pick-odds">${p.odds || ''}</div>
+            <div class="pick-units">${p.units ? p.units + 'u' : ''}</div>
+          </div>
+        </${tag}>`;
+      }).join('');
+    }, () => {
+      document.getElementById('picks-list').innerHTML = '<div class="picks-empty">Unable to load picks. Check back soon.</div>';
+    });
+  } catch(e) {
+    document.getElementById('picks-list').innerHTML = '<div class="picks-empty">No active picks right now. Check back soon.</div>';
+  }
+</script>
 
 <script>
-// ══════════════════════════════════════════════
-//  DATA
-// ══════════════════════════════════════════════
-
+// ─── NEWS DATA ─────────────────────────────────────────────────────────────
 const newsData = [
   {
-    category: "Arkansas Derby · G1 🔥",
-    title: "Renegade Installed as 3-2 Favorite for $1.5M Arkansas Derby at Oaklawn",
-    body: "Todd Pletcher's Renegade heads an eight-horse field in the 90th Arkansas Derby. Silent Tactic (5-2), Litmus Test (5-1), and Blackout Time (6-1) are the other main contenders. The winner earns 100 Kentucky Derby points.",
+    category: "Arkansas Derby",
+    title: "Renegade Faces Baffert's Litmus Test in $1.5M Oaklawn Showdown",
+    body: "Pletcher's Renegade — the lone horse in the field with experience at 1 1/8 miles — is the 3-2 morning-line chalk with Irad Ortiz Jr. aboard, who passed up a Florida Derby mount to stay the course. Litmus Test (Baffert) and Southwest winner Silent Tactic loom as the chief dangers in the 100-point G1 at Oaklawn.",
     date: "Mar 28, 2026",
-    url: ""
+    url: "https://www.bloodhorse.com/horse-racing/race/usa/op/2026/3/28/13/arkansas-derby-g1"
   },
   {
-    category: "Florida Derby · G1 🔥",
-    title: "Chief Wallabee vs. Commandment: $1M Florida Derby at Gulfstream Shapes Up as Two-Horse War",
-    body: "Bill Mott's Chief Wallabee (2-1) and Brad Cox's Commandment (5-2) are the class of an eight-horse field in the 75th Curlin Florida Derby. Nearly (3/1) and Gregarious are the logical threats. Post time 6:42p ET, Race 14.",
+    category: "Florida Derby",
+    title: "Chief Wallabee Seeks Redemption in G1 Gulfstream Rematch",
+    body: "Chief Wallabee (2-1 program fav) looks to reverse a runner-up finish in the Fountain of Youth against the Brad Cox-trained Commandment and Todd Pletcher's undefeated Nearly, who is 3-for-3 at Gulfstream. Tampa Bay Derby winner The Puma is the wild card. All four are contesting 100 points on the Road to the Kentucky Derby.",
     date: "Mar 28, 2026",
-    url: ""
+    url: "https://entries.horseracingnation.com/entries-results/gulfstream-park/2026-03-28"
   },
   {
-    category: "This Weekend",
-    title: "Double-Barrel G1 Saturday: $2.5M in Derby Points on the Line at Oaklawn & Gulfstream",
-    body: "For the first time this prep season, two Grade 1 preps run on the same day. The Arkansas Derby and Florida Derby both go Saturday offering 100 points to the winner — critical positioning with Keeneland and Churchill Downs on the horizon.",
-    date: "Mar 27, 2026",
-    url: ""
+    category: "Dubai World Cup",
+    title: "Dark Saffron Rules the Golden Shaheen; Native Approach Nabs Al Quoz Sprint",
+    body: "Dubai World Cup night delivered international drama at Meydan: Dark Saffron romped in the $2M Dubai Golden Shaheen (G1), Native Approach prevailed in the Al Quoz Sprint (G1), and Japan's ADMIRE DAYTONA took the UAE Derby. Forever Young was the headliner in the $12M World Cup itself — full results now on the Dubai Racing Club site.",
+    date: "Mar 28, 2026",
+    url: "https://dubairacingclub.com/race-results-replays/dwc-race-replay-race-6-dubai-golden-shaheen-march-28-2026/"
   },
   {
-    category: "Keeneland",
-    title: "Keeneland Spring Meet Opens April 2 — Blue Grass Stakes Headlines Loaded Schedule",
-    body: "The Blue Grass Stakes (G1) and Ben Ali (G3) will headline a premium stakes schedule at the Lexington oval. Turf course expected to be in excellent shape after a mild winter.",
-    date: "Mar 25, 2026",
-    url: ""
+    category: "Louisiana Derby",
+    title: "Emerging Market Survives Thriller to Bank 100 Derby Points",
+    body: "Chad Brown's Emerging Market edged Pavlovian by a head in a tense Louisiana Derby (G2) at Fair Grounds, covering 1 3/16 miles in 1:55.18 to top the leaderboard. The 'TDN Rising Star' now holds a clear points advantage heading into the final prep season and appears to be a live Churchill Downs threat.",
+    date: "Mar 28, 2026",
+    url: "https://www.theracingbiz.com/2026/03/22/triple-crown-trail-emerging-market-takes-louisiana-derby/"
   },
   {
-    category: "Handicapping",
-    title: "Pace Analysis Outperforming Speed Figures in Early Spring Returns",
-    body: "Early data from the 2026 prep circuit shows pace-pressers thriving in the Championship Series preps, while pure closers remain vulnerable on sealed main tracks. Today's Arkansas Derby field is packed with pace — keep that in mind.",
-    date: "Mar 24, 2026",
-    url: ""
+    category: "Jeff Ruby Steaks",
+    title: "Fulleffort Punches His Derby Ticket at Turfway Park",
+    body: "Brad Cox's Fulleffort surged through the middle of the track under Irad Ortiz Jr. to win the Jeff Ruby Steaks (G3) by 2½ lengths in 1:49.94, earning 100 qualifying points and a guaranteed spot in the Churchill Downs starting gate. The win improved Fulleffort's record to 6-3-2-1 and cemented Cox/Ortiz as a power pairing on the Derby trail.",
+    date: "Mar 28, 2026",
+    url: "https://www.bloodhorse.com/horse-racing/stakes-result/290731/jeff-ruby-steaks-g3-fulleffort"
   },
   {
-    category: "Value Plays",
-    title: "Oaklawn Mile & Fantasy Stakes: Hidden Value on a Big Afternoon",
-    body: "While all eyes are on the Arkansas Derby, the $750K Fantasy Stakes for 3YO fillies and the $500K Oaklawn Mile for older horses round out a massive card. Both offer sharp handicapping opportunities at generous prices.",
-    date: "Mar 27, 2026",
-    url: ""
+    category: "Derby Trail",
+    title: "Super Prep Season in Full Swing — Arkansas & Florida Decide the Field",
+    body: "Today's Arkansas Derby and Florida Derby both offer 100 points, the maximum available before Churchill Downs. Winners of both races have historically dominated the Derby trail: the Florida Derby alone has produced 26 Derby winners. The Puma (Tampa Bay Derby) adds an intriguing speed angle at 3-1, while Renegade at Oaklawn shapes as the class of his field. The 152nd Run for the Roses goes May 2.",
+    date: "Mar 28, 2026",
+    url: "https://www.kentuckyderby.com/horses/news/kentucky-derby-prep-review-march-24-2026/"
   }
 ];
 
+// ─── STAKES DATA ──────────────────────────────────────────────────────────
 const stakesData = [
-  // ── THIS WEEKEND ──
-  { date:"Mar 28 🔥", name:"Arkansas Derby",       track:"Oaklawn Park",    g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1.5M",  note:"Derby Prep (100 pts) · 6:48p CT", derby:true  },
-  { date:"Mar 28 🔥", name:"Curlin Florida Derby",  track:"Gulfstream Park", g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1M",    note:"Derby Prep (100 pts) · 6:42p ET", derby:true  },
-  { date:"Mar 28 🔥", name:"Fantasy Stakes",        track:"Oaklawn Park",    g:3, dist:"1 1/16m", surf:"Dirt", purse:"$750K",  note:"3YO Fillies · Oaks Road",         derby:false },
-  { date:"Mar 28 🔥", name:"Oaklawn Mile",          track:"Oaklawn Park",    g:3, dist:"1m",      surf:"Dirt", purse:"$500K",  note:"Older Horses",                    derby:false },
-  { date:"Mar 28 🔥", name:"Wilshire Stakes",       track:"Santa Anita",     g:3, dist:"1m",      surf:"Turf", purse:"$100K",  note:"F&M Turf · 1p PT",                derby:false },
-  // ── COMING UP ──
-  { date:"Apr 4",  name:"Tampa Bay Derby",      track:"Tampa Bay Downs", g:2, dist:"1 1/16m", surf:"Dirt", purse:"$400K",  note:"Derby Prep (85 pts)", derby:true  },
-  { date:"Apr 4",  name:"Santa Anita Oaks",     track:"Santa Anita",     g:1, dist:"1 1/16m", surf:"Dirt", purse:"$300K",  note:"Oaks Road",          derby:false },
-  { date:"Apr 4",  name:"Turfway Park Spiral",  track:"Turfway Park",    g:3, dist:"1 1/8m",  surf:"Poly", purse:"$300K",  note:"Derby Prep (50 pts)", derby:true  },
-  { date:"Apr 11", name:"Blue Grass Stakes",    track:"Keeneland",       g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1M",    note:"Derby Prep (100 pts) 🔥", derby:true  },
-  { date:"Apr 11", name:"Wood Memorial",        track:"Aqueduct",        g:2, dist:"1 1/8m",  surf:"Dirt", purse:"$750K",  note:"Derby Prep (100 pts) 🔥", derby:true  },
-  { date:"Apr 11", name:"Santa Anita Derby",    track:"Santa Anita",     g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1M",    note:"Derby Prep (100 pts) 🔥", derby:true  },
-  { date:"Apr 18", name:"Ben Ali Stakes",       track:"Keeneland",       g:3, dist:"1 1/8m",  surf:"Dirt", purse:"$200K",  note:"4-yr-olds & up",     derby:false },
-  { date:"Apr 24", name:"Bewitch Stakes",       track:"Keeneland",       g:3, dist:"1 1/2m",  surf:"Turf", purse:"$200K",  note:"F&M Turf",           derby:false },
-  { date:"May 1",  name:"Kentucky Oaks",        track:"Churchill Downs",  g:1, dist:"1 1/8m",  surf:"Dirt", purse:"$1.5M",  note:"Fillies Classic",    derby:false },
-  { date:"May 2",  name:"Kentucky Derby",       track:"Churchill Downs",  g:1, dist:"1 1/4m",  surf:"Dirt", purse:"$5M",    note:"🏆 The Run for the Roses", derby:false },
+  { date: "Mar 28", race: "Arkansas Derby", grade: "G1", track: "Oaklawn Park", dist: "1 1/8m Dirt", purse: "$1.5M", pts: "100", notes: "Renegade favored; Litmus Test (Baffert) threatens" },
+  { date: "Mar 28", race: "Curlin Florida Derby", grade: "G1", track: "Gulfstream Park", dist: "1 1/8m Dirt", purse: "$1M", pts: "100", notes: "Chief Wallabee vs Commandment rematch" },
+  { date: "Apr 5", race: "Blue Grass Stakes", grade: "G1", track: "Keeneland", dist: "1 1/16m Dirt", purse: "$1M", pts: "100", notes: "Final major prep before Derby" },
+  { date: "Apr 5", race: "Wood Memorial", grade: "G2", track: "Aqueduct", dist: "1 1/8m Dirt", purse: "$750K", pts: "100", notes: "Traditional NY Derby springboard" },
+  { date: "Apr 5", race: "Santa Anita Derby", grade: "G1", track: "Santa Anita", dist: "1 1/8m Dirt", purse: "$1M", pts: "100", notes: "West Coast qualifier" },
+  { date: "Apr 18", race: "Lexington Stakes", grade: "G3", track: "Keeneland", dist: "1 1/16m Dirt", purse: "$300K", pts: "20", notes: "Final points race; last chance bubble" },
+  { date: "Apr 25", race: "Derby Trial", grade: "G3", track: "Churchill Downs", dist: "1m Dirt", purse: "$175K", pts: "20", notes: "On the Derby track" },
+  { date: "May 2", race: "Kentucky Derby", grade: "G1", track: "Churchill Downs", dist: "1 1/4m Dirt", purse: "$5M", pts: "—", notes: "The 152nd Run for the Roses" }
 ];
 
+// ─── UPCOMING RACES ───────────────────────────────────────────────────────
 const upcomingRaces = [
-  { track:"Oaklawn Park",    date:"🔥 Tomorrow — Mar 28", name:"Arkansas Derby Day (G1)",   chips:["Arkansas Derby G1","Fantasy Stakes G3","Oaklawn Mile G3","14-Race Card","Doors Open 10am"], purse:"$2.75M in Stakes" },
-  { track:"Gulfstream Park", date:"🔥 Tomorrow — Mar 28", name:"Curlin Florida Derby (G1)", chips:["Florida Derby G1","$2.45M Total Card","10 Stakes Races","Post Time 6:42p ET"],              purse:"$1,000,000 G1"    },
-  { track:"Santa Anita",     date:"Mar 28–29, 2026",   name:"Weekend Card",              chips:["Wilshire Stakes G3T","Sat & Sun 1p PT","Turf & Dirt"],   purse:"Wilshire $100K"       },
-  { track:"Keeneland",       date:"Apr 2–24, 2026",    name:"Spring Meet 2026",          chips:["18 Race Days","Blue Grass Apr 11","Turf & Dirt"],         purse:"Multiple $1M+ Stakes" },
-  { track:"Churchill Downs", date:"Apr 25 – Jun 27",   name:"Spring Meet · Derby Week",  chips:["Opens Apr 25","Kentucky Derby May 2","Oaks May 1"],       purse:"Derby $5M"            },
-  { track:"Santa Anita",     date:"Apr 11, 2026",      name:"Santa Anita Derby (G1)",    chips:["Derby Prep","100 Derby Points","G1 Action","1 1/8m"],     purse:"$1,000,000"           },
+  {
+    track: "Oaklawn Park",
+    date: "Saturday, Mar 28",
+    chips: ["Arkansas Derby G1", "Smarty Jones S.", "8-Race Card"],
+    purse: "Featured: <strong>$1.5M</strong> · Total Card: <strong>$3.2M+</strong>"
+  },
+  {
+    track: "Gulfstream Park",
+    date: "Saturday, Mar 28",
+    chips: ["Florida Derby G1", "Orchid S. G3", "9-Race Card"],
+    purse: "Featured: <strong>$1M</strong> · Total Card: <strong>$2.5M+</strong>"
+  },
+  {
+    track: "Keeneland",
+    date: "Sunday, Apr 5",
+    chips: ["Blue Grass G1", "Limestone S.", "8-Race Card"],
+    purse: "Featured: <strong>$1M</strong> · Total Card: <strong>$2M+</strong>"
+  },
+  {
+    track: "Aqueduct",
+    date: "Sunday, Apr 5",
+    chips: ["Wood Memorial G2", "NYJC Oaks", "8-Race Card"],
+    purse: "Featured: <strong>$750K</strong> · Total Card: <strong>$1.5M+</strong>"
+  },
+  {
+    track: "Santa Anita Park",
+    date: "Sunday, Apr 5",
+    chips: ["Santa Anita Derby G1", "Santa Ana S.", "9-Race Card"],
+    purse: "Featured: <strong>$1M</strong> · Total Card: <strong>$2.2M+</strong>"
+  },
+  {
+    track: "Churchill Downs",
+    date: "Saturday, May 2",
+    chips: ["KENTUCKY DERBY G1", "Kentucky Oaks G1", "Full Derby Card"],
+    purse: "Featured: <strong>$5M</strong> · Oaks: <strong>$2M</strong>"
+  }
 ];
 
-// ══════════════════════════════════════════════
-//  RENDER: NEWS
-// ══════════════════════════════════════════════
+// ─── RENDER ───────────────────────────────────────────────────────────────
 function renderNews() {
   const grid = document.getElementById('news-grid');
+  const label = document.getElementById('news-date-label');
+  if (newsData.length) label.textContent = newsData[0].date;
   grid.innerHTML = newsData.map(n => {
-    const isLinked = !!n.url;
-    const tag = isLinked ? `a href="${n.url}" target="_blank" rel="noopener"` : 'div';
-    const close = isLinked ? 'a' : 'div';
-    return `
-      <${tag} class="news-card" ${!isLinked ? '' : ''}>
-        <div class="news-category">${n.category}</div>
-        <h3>${n.title}</h3>
-        <p>${n.body}</p>
-        <div class="news-meta">
-          <span class="news-date">${n.date}</span>
-          <span class="news-read-more">${isLinked ? 'Read →' : 'Headline only'}</span>
-        </div>
-      </${close}>`;
+    const isLink = n.url && n.url.length > 0;
+    const tag = isLink ? 'a' : 'div';
+    const attrs = isLink ? `href="${n.url}" target="_blank" rel="noopener"` : '';
+    return `<${tag} class="news-card" ${attrs}>
+      <div class="news-category">${n.category}</div>
+      <div class="news-title">${n.title}</div>
+      <div class="news-body">${n.body}</div>
+      <div class="news-date">${n.date}</div>
+    </${tag}>`;
   }).join('');
 }
 
-// ══════════════════════════════════════════════
-//  RENDER: STAKES
-// ══════════════════════════════════════════════
-function renderStakes() {
-  const surfDot = s => {
-    const cls = s === 'Turf' ? 'dot-turf' : s === 'Dirt' ? 'dot-dirt' : 'dot-poly';
-    return `<span class="surface-dot ${cls}"></span>${s}`;
-  };
-  document.getElementById('stakes-body').innerHTML = stakesData.map(s => `
-    <tr class="${s.derby ? 'derby-row' : ''}">
-      <td style="font-family:var(--sans);font-size:0.8rem;white-space:nowrap">${s.date}</td>
-      <td class="race-name-cell">${s.name}</td>
-      <td class="track-cell" style="font-family:var(--sans);font-size:0.78rem">${s.track}</td>
-      <td><span class="grade-pip g${s.g}">G${s.g}</span></td>
-      <td style="font-family:var(--sans);font-size:0.78rem;white-space:nowrap">${s.dist} &nbsp; ${surfDot(s.surf)}</td>
-      <td class="purse-cell" style="font-family:var(--sans);font-size:0.78rem">${s.purse}</td>
-      <td class="note-cell">${s.note}</td>
-    </tr>`).join('');
+function gradeChip(g) {
+  const cls = g === 'G1' ? 'grade-g1' : g === 'G2' ? 'grade-g2' : 'grade-g3';
+  return `<span class="grade-chip ${cls}">${g}</span>`;
 }
 
-// ══════════════════════════════════════════════
-//  RENDER: UPCOMING
-// ══════════════════════════════════════════════
+function renderStakes() {
+  document.getElementById('stakes-tbody').innerHTML = stakesData.map(s => `<tr>
+    <td class="race-date-col">${s.date}</td>
+    <td><strong>${s.race}</strong></td>
+    <td>${gradeChip(s.grade)}</td>
+    <td>${s.track}</td>
+    <td>${s.dist}</td>
+    <td class="purse-col">${s.purse}</td>
+    <td style="font-weight:600;color:var(--gold)">${s.pts}</td>
+    <td class="notes-col">${s.notes}</td>
+  </tr>`).join('');
+}
+
 function renderUpcoming() {
   document.getElementById('upcoming-grid').innerHTML = upcomingRaces.map(r => `
-    <div class="race-card">
-      <div class="race-card-top">
-        <div class="race-track-name">${r.track}</div>
-        <div class="race-date-tag">${r.date}</div>
+    <div class="track-card">
+      <div class="track-name">${r.track}</div>
+      <div class="track-date">${r.date}</div>
+      <div class="track-chips">
+        ${r.chips.map((c, i) => `<span class="track-chip${i === 0 ? ' featured' : ''}">${c}</span>`).join('')}
       </div>
-      <div class="race-card-name">${r.name}</div>
-      <div class="race-chips">${r.chips.map(c => `<span class="chip">${c}</span>`).join('')}</div>
-      <div class="race-purse-line">💰 ${r.purse}</div>
+      <div class="track-purse">${r.purse}</div>
     </div>`).join('');
 }
 
-// ══════════════════════════════════════════════
-//  PICKS STATE
-// ══════════════════════════════════════════════
-let picks = [];
-let editId = null;
-let activeFilter = 'all';
-let db = null;
-let picksCol = null;
-
-// ══════════════════════════════════════════════
-//  FIREBASE INIT (safe — page renders even if Firebase fails)
-// ══════════════════════════════════════════════
-function initFirebase() {
-  try {
-    const firebaseConfig = {
-      apiKey: "AIzaSyB6nESEWtK95PUeSaoHWXv0TYrCpVm5vQI",
-      authDomain: "bennythebet.firebaseapp.com",
-      projectId: "bennythebet",
-      storageBucket: "bennythebet.firebasestorage.app",
-      messagingSenderId: "849946766302",
-      appId: "1:849946766302:web:8a3dc377046d826d368b4f"
-    };
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
-    picksCol = db.collection('picks');
-
-    // Listen for real-time changes — no orderBy to avoid index requirements,
-    // sort newest-first client-side instead
-    picksCol.onSnapshot(snapshot => {
-      picks = snapshot.docs
-        .map(d => ({ id: d.id, ...d.data() }))
-        .sort((a, b) => {
-          const ta = a.ts ? (a.ts.seconds || 0) : 0;
-          const tb = b.ts ? (b.ts.seconds || 0) : 0;
-          return tb - ta;
-        });
-      document.getElementById('live-status').textContent = 'Live';
-      renderPicks();
-    }, err => {
-      document.getElementById('live-status').textContent = 'Offline';
-      console.error('Firestore error:', err);
-    });
-  } catch(e) {
-    console.error('Firebase init failed:', e);
-    document.getElementById('live-status').textContent = 'Offline';
-  }
+function updateCountdown() {
+  const diff = new Date('2026-05-02T18:57:00-04:00').getTime() - Date.now();
+  if (diff <= 0) { ['days','hours','mins','secs'].forEach(u => document.getElementById('cd-'+u).textContent = '00'); return; }
+  document.getElementById('cd-days').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  document.getElementById('cd-mins').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  document.getElementById('cd-secs').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
 }
 
-function openModal(id = null) {
-  editId = id;
-  const editing = id !== null;
-  document.getElementById('modal-title').textContent = editing ? 'Edit Pick' : 'Add a Pick';
-  const p = editing ? (picks.find(p => p.id === id) || {}) : {};
-  document.getElementById('f-track').value  = p.track  || '';
-  document.getElementById('f-race').value   = p.race   || '';
-  document.getElementById('f-horse').value  = p.horse  || '';
-  document.getElementById('f-bet').value    = p.bet    || 'Win';
-  document.getElementById('f-odds').value   = p.odds   || '';
-  document.getElementById('f-units').value  = p.units  || '';
-  document.getElementById('f-url').value    = p.url    || '';
-  document.getElementById('f-note').value   = p.note   || '';
-  document.getElementById('modal-backdrop').classList.add('show');
-  setTimeout(() => document.getElementById('f-track').focus(), 80);
-}
-
-function closeModal() {
-  document.getElementById('modal-backdrop').classList.remove('show');
-  editId = null;
-}
-
-function savePick() {
-  const track = document.getElementById('f-track').value.trim();
-  const horse = document.getElementById('f-horse').value.trim();
-  if (!track || !horse) { alert('Track and horse name are required.'); return; }
-  if (!picksCol) { alert('Not connected to database. Please refresh and try again.'); return; }
-  const pick = {
-    track, horse,
-    race:  document.getElementById('f-race').value.trim()  || '—',
-    bet:   document.getElementById('f-bet').value,
-    odds:  document.getElementById('f-odds').value.trim()  || '—',
-    units: document.getElementById('f-units').value.trim(),
-    url:   document.getElementById('f-url').value.trim(),
-    note:  document.getElementById('f-note').value.trim(),
-    date:  new Date().toLocaleDateString('en-US', { month:'short', day:'numeric' }),
-    ts:    firebase.firestore.FieldValue.serverTimestamp()
-  };
-  if (editId !== null) {
-    picksCol.doc(editId).set(pick);
-  } else {
-    picksCol.add(pick);
-  }
-  closeModal();
-  // onSnapshot handles re-render automatically
-}
-
-function deletePick(id) {
-  if (!confirm('Remove this pick?')) return;
-  if (picksCol) picksCol.doc(id).delete();
-}
-
-function confirmClear() {
-  if (!picks.length) return;
-  if (!confirm('Clear all picks? This cannot be undone.')) return;
-  if (!db || !picksCol) return;
-  const batch = db.batch();
-  picks.forEach(p => batch.delete(picksCol.doc(p.id)));
-  batch.commit();
-}
-
-function setFilter(val, el) {
-  activeFilter = val;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
-  el.classList.add('on');
-  renderPickCards();
-}
-
-function renderPicks() {
-  const tracks = ['all', ...new Set(picks.map(p => p.track))];
-  const bar = document.getElementById('picks-filter');
-  bar.innerHTML = tracks.map(t =>
-    `<button class="filter-btn ${activeFilter === t ? 'on' : ''}"
-      onclick="setFilter('${t}',this)">${t === 'all' ? 'All Tracks' : t}</button>`
-  ).join('');
-  renderPickCards();
-}
-
-function renderPickCards() {
-  const board = document.getElementById('picks-board');
-  const list = activeFilter === 'all' ? picks : picks.filter(p => p.track === activeFilter);
-
-  if (!list.length) {
-    board.innerHTML = `
-      <div class="picks-empty">
-        <div class="picks-empty-icon">🏇</div>
-        <p>${picks.length
-          ? `No picks for <strong>${activeFilter}</strong>.`
-          : `No picks yet — hit <strong style="color:var(--gold-light)">+ Add Pick</strong> to post your first card.`
-        }</p>
-      </div>`;
-    return;
-  }
-
-  board.innerHTML = `<div class="picks-grid">${list.map(p => `
-      <div class="pick-card">
-        <div class="pick-header">
-          <div class="pick-track-label">${p.track}</div>
-          <div class="pick-race-tag">${p.race}</div>
-        </div>
-        <div class="pick-horse">${p.horse}</div>
-        <div class="pick-badges">
-          <span class="pick-bet-badge">${p.bet}</span>
-          <span class="pick-odds-val">${p.odds}</span>
-          ${p.units ? `<span class="pick-units">${p.units}</span>` : ''}
-        </div>
-        ${p.note ? `<div class="pick-note">${p.note}</div>` : ''}
-        <div class="pick-footer">
-          <div class="pick-date">${p.date}</div>
-          <div class="pick-actions">
-            <button class="btn-edit" onclick="openModal('${p.id}')">Edit</button>
-            <button class="btn-del"  onclick="deletePick('${p.id}')">✕</button>
-          </div>
-        </div>
-      </div>`).join('')}</div>`;
-}
-
-// ══════════════════════════════════════════════
-//  COUNTDOWN
-// ══════════════════════════════════════════════
-function tick() {
-  const target = new Date('2026-05-02T18:57:00-04:00');
-  const diff = target - Date.now();
-  if (diff <= 0) {
-    ['cd-days','cd-hours','cd-mins','cd-secs'].forEach((id, i) => {
-      document.getElementById(id).textContent = ['🏆','—','—','—'][i];
-    });
-    return;
-  }
-  document.getElementById('cd-days').textContent  = Math.floor(diff / 86400000);
-  document.getElementById('cd-hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
-  document.getElementById('cd-mins').textContent  = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
-  document.getElementById('cd-secs').textContent  = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
-}
-
-// ══════════════════════════════════════════════
-//  EVENTS
-// ══════════════════════════════════════════════
-document.getElementById('modal-backdrop').addEventListener('click', e => {
-  if (e.target === document.getElementById('modal-backdrop')) closeModal();
-});
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-// ══════════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════════
-// Render static content immediately — never blocked by Firebase
 renderNews();
 renderStakes();
 renderUpcoming();
-renderPicks(); // shows empty state until Firestore responds
-tick();
-setInterval(tick, 1000);
-// Connect to Firebase after page is painted
-initFirebase();
+updateCountdown();
+setInterval(updateCountdown, 1000);
 </script>
 </body>
 </html>
