@@ -403,6 +403,151 @@ a.news-card .news-title::after {
   font-size: 0.85rem;
   font-style: italic;
 }
+.pick-result-btns {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-top: 6px;
+}
+.btn-result {
+  border: none;
+  border-radius: 3px;
+  padding: 3px 9px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  opacity: 0.55;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn-result:hover { opacity: 1; transform: scale(1.08); }
+.btn-result.active { opacity: 1; }
+.btn-w  { background: #1e3a2a; color: #4caf50; border: 1px solid #4caf50; }
+.btn-l  { background: #3a1e1e; color: #e57373; border: 1px solid #e57373; }
+.btn-del {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  padding: 3px 6px;
+  border-radius: 3px;
+  margin-left: 4px;
+  transition: color 0.15s;
+}
+.btn-del:hover { color: #e57373; }
+.pick-item.result-win  { border-left: 3px solid #4caf50; }
+.pick-item.result-loss { border-left: 3px solid #e57373; }
+.result-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-left: 4px;
+}
+.result-badge.win  { color: #4caf50; }
+.result-badge.loss { color: #e57373; }
+
+/* ADD PICK FORM */
+.add-pick-wrap {
+  margin-bottom: 20px;
+}
+.add-pick-toggle {
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.add-pick-toggle:hover { background: var(--gold-light); }
+.add-pick-form {
+  display: none;
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 24px;
+  margin-top: 14px;
+}
+.add-pick-form.open { display: block; }
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 18px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.form-input {
+  background: var(--navy3);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 9px 12px;
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.84rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-input:focus { border-color: var(--gold); }
+.form-input::placeholder { color: var(--muted); }
+.form-actions { display: flex; gap: 10px; align-items: center; }
+.btn-submit {
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 3px;
+  padding: 10px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-submit:hover { background: var(--gold-light); }
+.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-cancel {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 10px 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.btn-cancel:hover { color: var(--cream); }
+.form-status {
+  font-size: 0.78rem;
+  margin-left: 8px;
+}
+.form-status.success { color: #4caf50; }
+.form-status.error { color: #e57373; }
 
 /* FOOTER */
 footer {
@@ -524,6 +669,52 @@ footer strong { color: var(--gold); }
     <div class="section-divider"></div>
     <span class="section-meta">Live · @bennythebet</span>
   </div>
+  <div class="add-pick-wrap">
+    <button class="add-pick-toggle" id="toggle-form">+ Add Pick</button>
+    <div class="add-pick-form" id="add-pick-form">
+      <div class="form-title">Post a New Pick</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Track</label>
+          <input class="form-input" id="f-track" placeholder="e.g. Keeneland" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Race #</label>
+          <input class="form-input" id="f-race" type="number" placeholder="e.g. 5" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Horse</label>
+          <input class="form-input" id="f-horse" placeholder="e.g. Renegade" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Bet Type</label>
+          <input class="form-input" id="f-bet-type" placeholder="e.g. Win, Exacta" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Odds</label>
+          <input class="form-input" id="f-odds" placeholder="e.g. 5/2" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Units</label>
+          <input class="form-input" id="f-units" type="number" step="0.5" placeholder="e.g. 2" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <input class="form-input" id="f-notes" placeholder="e.g. Speed bias, sharp action" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Link (optional)</label>
+          <input class="form-input" id="f-url" placeholder="https://..." />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-submit" id="submit-pick">Post Pick</button>
+        <button class="btn-cancel" id="cancel-pick">Cancel</button>
+        <span class="form-status" id="form-status"></span>
+      </div>
+    </div>
+  </div>
+
   <div class="picks-board">
     <div class="picks-header">
       <div class="picks-header-title">Active Plays</div>
@@ -547,7 +738,7 @@ footer strong { color: var(--gold); }
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-  import { getFirestore, collection, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+  import { getFirestore, collection, onSnapshot, query, orderBy, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
   const firebaseConfig = {
     apiKey: "AIzaSyBennyTheBetFirebaseKey",
@@ -563,29 +754,102 @@ footer strong { color: var(--gold); }
     const db = getFirestore(app);
     const q = query(collection(db, 'picks'), orderBy('ts', 'desc'));
 
+    // ── Add Pick form ──
+    const toggleBtn = document.getElementById('toggle-form');
+    const formEl    = document.getElementById('add-pick-form');
+    const cancelBtn = document.getElementById('cancel-pick');
+    const submitBtn = document.getElementById('submit-pick');
+    const statusEl  = document.getElementById('form-status');
+
+    toggleBtn.addEventListener('click', () => formEl.classList.toggle('open'));
+    cancelBtn.addEventListener('click', () => { formEl.classList.remove('open'); statusEl.textContent = ''; });
+
+    submitBtn.addEventListener('click', async () => {
+      const horse = document.getElementById('f-horse').value.trim();
+      const track = document.getElementById('f-track').value.trim();
+      if (!horse || !track) { statusEl.textContent = 'Track and Horse are required.'; statusEl.className = 'form-status error'; return; }
+
+      submitBtn.disabled = true;
+      statusEl.textContent = 'Posting…';
+      statusEl.className = 'form-status';
+
+      try {
+        await addDoc(collection(db, 'picks'), {
+          track,
+          horse,
+          race:     document.getElementById('f-race').value.trim(),
+          bet_type: document.getElementById('f-bet-type').value.trim(),
+          odds:     document.getElementById('f-odds').value.trim(),
+          units:    document.getElementById('f-units').value.trim(),
+          notes:    document.getElementById('f-notes').value.trim(),
+          url:      document.getElementById('f-url').value.trim(),
+          date:     new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+          ts:       serverTimestamp()
+        });
+        statusEl.textContent = '✓ Pick posted!';
+        statusEl.className = 'form-status success';
+        ['f-track','f-race','f-horse','f-bet-type','f-odds','f-units','f-notes','f-url'].forEach(id => document.getElementById(id).value = '');
+        setTimeout(() => { formEl.classList.remove('open'); statusEl.textContent = ''; }, 1800);
+      } catch(err) {
+        statusEl.textContent = 'Error posting pick. Check Firebase config.';
+        statusEl.className = 'form-status error';
+      }
+      submitBtn.disabled = false;
+    });
+
     onSnapshot(q, (snap) => {
       const list = document.getElementById('picks-list');
       if (snap.empty) {
         list.innerHTML = '<div class="picks-empty">No active picks right now. Check back soon.</div>';
         return;
       }
-      list.innerHTML = snap.docs.map((doc, i) => {
-        const p = doc.data();
-        const tag = p.url ? 'a' : 'div';
-        const attrs = p.url ? `href="${p.url}" target="_blank" rel="noopener"` : '';
-        return `<${tag} class="pick-item" ${attrs} style="${p.url ? 'text-decoration:none;' : ''}">
+      list.innerHTML = snap.docs.map((docSnap, i) => {
+        const p = docSnap.data();
+        const id = docSnap.id;
+        const result = p.result || '';
+        const resultClass = result === 'win' ? 'result-win' : result === 'loss' ? 'result-loss' : '';
+        const badgeMap = { win: '✓ Win', loss: '✗ Loss' };
+        const badge = result ? `<span class="result-badge ${result}">${badgeMap[result]}</span>` : '';
+        return `<div class="pick-item ${resultClass}" data-id="${id}">
           <div class="pick-race-num">R${p.race || i+1}</div>
           <div class="pick-info">
-            <div class="pick-track">${p.track || ''}</div>
-            <div class="pick-horse">${p.horse || ''}</div>
+            <div class="pick-track">${p.track || ''}${badge}</div>
+            <div class="pick-horse">${p.url ? `<a href="${p.url}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline dotted;">${p.horse || ''}</a>` : (p.horse || '')}</div>
             <div class="pick-type">${p.bet_type || ''}${p.notes ? ' · ' + p.notes : ''}</div>
+            <div class="pick-result-btns">
+              <button class="btn-result btn-w ${result==='win'?'active':''}"  data-id="${id}" data-result="win">W</button>
+              <button class="btn-result btn-l ${result==='loss'?'active':''}" data-id="${id}" data-result="loss">L</button>
+              <button class="btn-del" data-id="${id}" title="Delete pick">🗑</button>
+            </div>
           </div>
           <div>
             <div class="pick-odds">${p.odds || ''}</div>
             <div class="pick-units">${p.units ? p.units + 'u' : ''}</div>
           </div>
-        </${tag}>`;
+        </div>`;
       }).join('');
+
+      // Result buttons
+      list.querySelectorAll('.btn-result').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const ref = doc(db, 'picks', btn.dataset.id);
+          const current = btn.closest('.pick-item');
+          const alreadySet = btn.classList.contains('active');
+          await updateDoc(ref, { result: alreadySet ? '' : btn.dataset.result });
+        });
+      });
+
+      // Delete buttons
+      list.querySelectorAll('.btn-del').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          if (confirm('Delete this pick?')) {
+            await deleteDoc(doc(db, 'picks', btn.dataset.id));
+          }
+        });
+      });
+
     }, () => {
       document.getElementById('picks-list').innerHTML = '<div class="picks-empty">Unable to load picks. Check back soon.</div>';
     });
