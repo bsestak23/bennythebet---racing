@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BennyTheBet — Horse Racing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0b1622;
+  --navy2: #111e2d;
+  --navy3: #162436;
+  --gold: #b8962a;
+  --gold-light: #d4af3c;
+  --cream: #f0e8d4;
+  --cream2: #e8dcc8;
+  --cream3: #d9ccb4;
+  --white: #ffffff;
+  --muted: #7a8fa6;
+  --border: rgba(184,150,42,0.18);
+  --border-cream: rgba(184,150,42,0.35);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  background: var(--navy);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+.nav-brand span { color: var(--cream); font-weight: 400; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy3) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 24px 40px;
+  text-align: center;
+}
+.hero-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero-title em { color: var(--gold); font-style: italic; }
+.hero-sub {
+  color: var(--muted);
+  font-size: 0.92rem;
+  max-width: 520px;
+  margin: 0 auto 28px;
+}
+.countdown-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 28px;
+  font-size: 0.8rem;
+}
+.countdown-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.countdown-unit {
+  text-align: center;
+}
+.countdown-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+}
+.countdown-unit-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.countdown-divider { color: var(--gold); opacity: 0.4; font-size: 1.2rem; }
+
+/* SECTION */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+.section-meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+.section-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+}
+
+/* NEWS GRID */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-cream);
+  border: 1px solid var(--border-cream);
+}
+.news-card {
+  background: var(--cream);
+  color: var(--navy);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.news-card:hover { background: var(--cream2); }
+a.news-card { cursor: pointer; }
+a.news-card .news-title::after {
+  content: ' ↗';
+  font-size: 0.75em;
+  opacity: 0.5;
+}
+.news-category {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.news-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.news-body {
+  font-size: 0.82rem;
+  color: #3a4a5c;
+  line-height: 1.55;
+  flex: 1;
+}
+.news-date {
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-top: 12px;
+  letter-spacing: 0.06em;
+}
+
+/* STAKES TABLE */
+.stakes-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-cream);
+}
+.stakes-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--cream);
+  color: var(--navy);
+  font-size: 0.82rem;
+}
+.stakes-table thead {
+  background: var(--navy);
+  color: var(--gold);
+}
+.stakes-table th {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.stakes-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--cream3);
+  vertical-align: top;
+}
+.stakes-table tr:last-child td { border-bottom: none; }
+.stakes-table tr:hover td { background: var(--cream2); }
+.grade-chip {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 2px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.grade-g1 { background: var(--gold); color: var(--navy); }
+.grade-g2 { background: var(--navy3); color: var(--gold); border: 1px solid var(--gold); }
+.grade-g3 { background: transparent; color: var(--muted); border: 1px solid var(--cream3); }
+.race-date-col { white-space: nowrap; color: var(--muted); font-size: 0.78rem; }
+.notes-col { color: #5a6a7a; font-style: italic; font-size: 0.78rem; }
+.purse-col { font-weight: 600; white-space: nowrap; }
+
+/* UPCOMING CARDS */
+.upcoming-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.track-card {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+}
+.track-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.track-date {
+  font-size: 0.72rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.track-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.track-chip {
+  background: var(--navy3);
+  color: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.track-chip.featured { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 700; }
+.track-purse {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.track-purse strong { color: var(--cream); }
+
+/* PICKS BOARD */
+.picks-board {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.picks-header {
+  background: var(--navy);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.picks-header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--cream);
+  font-weight: 700;
+}
+.live-dot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.live-dot::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4caf50;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.picks-list { padding: 0; }
+.pick-item {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+}
+.pick-item:last-child { border-bottom: none; }
+.pick-race-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 28px;
+  text-align: center;
+}
+.pick-info {}
+.pick-track {
+  font-size: 0.68rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.pick-horse {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+.pick-type { font-size: 0.76rem; color: var(--muted); }
+.pick-odds {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: right;
+}
+.pick-units { font-size: 0.7rem; color: var(--muted); text-align: right; }
+.picks-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+footer strong { color: var(--gold); }
+.footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 10px; }
+.footer-links a { color: var(--muted); text-decoration: none; }
+.footer-links a:hover { color: var(--gold); }
+
+@media (max-width: 900px) {
+  .news-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .news-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .countdown-bar { gap: 14px; padding: 10px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">BennyTheBet <span>Racing</span></a>
+    <div class="nav-links">
+      <a href="#news">News</a>
+      <a href="#stakes">Stakes</a>
+      <a href="#upcoming">Cards</a>
+      <a href="#picks">My Picks</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Road to the Kentucky Derby · 2026</div>
+  <h1 class="hero-title">The Sport of <em>Kings</em></h1>
+  <p class="hero-sub">Daily handicapping, Derby trail coverage, and real-time picks from @bennythebet.</p>
+  <div class="countdown-bar">
+    <div class="countdown-label">Kentucky Derby</div>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-days">--</span>
+      <span class="countdown-unit-label">Days</span>
+    </div>
+    <span class="countdown-divider">:</span>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-hours">--</span>
+      <span class="countdown-unit-label">Hrs</span>
+    </div>
+    <span class="countdown-divider">:</span>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-mins">--</span>
+      <span class="countdown-unit-label">Min</span>
+    </div>
+    <span class="countdown-divider">:</span>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-secs">--</span>
+      <span class="countdown-unit-label">Sec</span>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS -->
+<section class="section" id="news">
+  <div class="section-header">
+    <h2 class="section-title">Racing News</h2>
+    <div class="section-divider"></div>
+    <span class="section-meta" id="news-date-label">Today</span>
+  </div>
+  <div class="news-grid" id="news-grid"></div>
+</section>
+
+<!-- STAKES SCHEDULE -->
+<section class="section" id="stakes">
+  <div class="section-header">
+    <h2 class="section-title">Stakes Schedule</h2>
+    <div class="section-divider"></div>
+    <span class="section-meta">Graded Stakes · Derby Trail</span>
+  </div>
+  <div class="stakes-table-wrap">
+    <table class="stakes-table" id="stakes-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Race</th>
+          <th>Grade</th>
+          <th>Track</th>
+          <th>Dist / Surface</th>
+          <th>Purse</th>
+          <th>Pts</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="stakes-tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- UPCOMING CARDS -->
+<section class="section" id="upcoming">
+  <div class="section-header">
+    <h2 class="section-title">Upcoming Cards</h2>
+    <div class="section-divider"></div>
+    <span class="section-meta">Track by Track</span>
+  </div>
+  <div class="upcoming-grid" id="upcoming-grid"></div>
+</section>
+
+<!-- PICKS -->
+<section class="section" id="picks">
+  <div class="section-header">
+    <h2 class="section-title">My Picks</h2>
+    <div class="section-divider"></div>
+    <span class="section-meta">Live · @bennythebet</span>
+  </div>
+  <div class="picks-board">
+    <div class="picks-header">
+      <div class="picks-header-title">Active Plays</div>
+      <div class="live-dot">Live</div>
+    </div>
+    <div class="picks-list" id="picks-list">
+      <div class="picks-empty">Loading picks…</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>BennyTheBet Racing</strong> — Handicapping & Horse Racing Picks</p>
+  <p style="margin-top:6px">Not financial advice. Bet responsibly. 21+</p>
+  <div class="footer-links">
+    <a href="https://x.com/bennythebet" target="_blank">@bennythebet on X</a>
+    <a href="https://bsestak23.github.io/bennythebet-racing/" target="_blank">Live Site</a>
+  </div>
+</footer>
+
+<script type="module">
+  // Firebase
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, collection, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBennyTheBetFirebaseKey",
+    authDomain: "bennythebet.firebaseapp.com",
+    projectId: "bennythebet",
+    storageBucket: "bennythebet.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:bennythebet"
+  };
+
+  try {
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const picksRef = collection(db, 'picks');
+    const q = query(picksRef, orderBy('ts', 'desc'));
+
+    onSnapshot(q, (snap) => {
+      const list = document.getElementById('picks-list');
+      if (snap.empty) {
+        list.innerHTML = '<div class="picks-empty">No active picks right now. Check back soon.</div>';
+        return;
+      }
+      list.innerHTML = snap.docs.map((doc, i) => {
+        const p = doc.data();
+        const link = p.url ? `href="${p.url}" target="_blank"` : '';
+        const tag = p.url ? 'a' : 'div';
+        return `<${tag} class="pick-item" ${link} style="${p.url ? 'text-decoration:none;' : ''}">
+          <div class="pick-race-num">R${p.race || i+1}</div>
+          <div class="pick-info">
+            <div class="pick-track">${p.track || ''}</div>
+            <div class="pick-horse">${p.horse || ''}</div>
+            <div class="pick-type">${p.bet_type || ''} ${p.notes ? '· ' + p.notes : ''}</div>
+          </div>
+          <div>
+            <div class="pick-odds">${p.odds || ''}</div>
+            <div class="pick-units">${p.units ? p.units + 'u' : ''}</div>
+          </div>
+        </${tag}>`;
+      }).join('');
+    }, (err) => {
+      document.getElementById('picks-list').innerHTML = '<div class="picks-empty">Unable to load picks. Check back soon.</div>';
+    });
+  } catch(e) {
+    document.getElementById('picks-list').innerHTML = '<div class="picks-empty">No active picks right now. Check back soon.</div>';
+  }
+</script>
+
+<script>
+// ─── NEWS DATA ─────────────────────────────────────────────────────────────
+const newsData = [
+  {
+    category: "Arkansas Derby",
+    title: "Renegade Faces Baffert's Litmus Test in $1.5M Oaklawn Showdown",
+    body: "Pletcher's Renegade — the lone horse in the field with experience at 1 1/8 miles — is the 3-2 morning-line chalk with Irad Ortiz Jr. aboard, who passed up a Florida Derby mount to stay the course. Litmus Test (Baffert) and Southwest winner Silent Tactic loom as the chief dangers in the 100-point G1 at Oaklawn.",
+    date: "Mar 28, 2026",
+    url: "https://www.bloodhorse.com/horse-racing/race/usa/op/2026/3/28/13/arkansas-derby-g1"
+  },
+  {
+    category: "Florida Derby",
+    title: "Chief Wallabee Seeks Redemption in G1 Gulfstream Rematch",
+    body: "Chief Wallabee (2-1 program fav) looks to reverse a runner-up finish in the Fountain of Youth against the Brad Cox-trained Commandment and Todd Pletcher's undefeated Nearly, who is 3-for-3 at Gulfstream. Tampa Bay Derby winner The Puma is the wild card. All four are contesting 100 points on the Road to the Kentucky Derby.",
+    date: "Mar 28, 2026",
+    url: "https://entries.horseracingnation.com/entries-results/gulfstream-park/2026-03-28"
+  },
+  {
+    category: "Dubai World Cup",
+    title: "Dark Saffron Rules the Golden Shaheen; Native Approach Nabs Al Quoz Sprint",
+    body: "Dubai World Cup night delivered international drama at Meydan: Dark Saffron romped in the $2M Dubai Golden Shaheen (G1), Native Approach prevailed in the Al Quoz Sprint (G1), and Japan's ADMIRE DAYTONA took the UAE Derby. Forever Young was the headliner in the $12M World Cup itself — full results now on the Dubai Racing Club site.",
+    date: "Mar 28, 2026",
+    url: "https://dubairacingclub.com/race-results-replays/dwc-race-replay-race-6-dubai-golden-shaheen-march-28-2026/"
+  },
+  {
+    category: "Louisiana Derby",
+    title: "Emerging Market Survives Thriller to Bank 100 Derby Points",
+    body: "Chad Brown's Emerging Market edged Pavlovian by a head in a tense Louisiana Derby (G2) at Fair Grounds, covering 1 3/16 miles in 1:55.18 to top the leaderboard. The 'TDN Rising Star' now holds a clear points advantage heading into the final prep season and appears to be a live Churchill Downs threat.",
+    date: "Mar 28, 2026",
+    url: "https://www.theracingbiz.com/2026/03/22/triple-crown-trail-emerging-market-takes-louisiana-derby/"
+  },
+  {
+    category: "Jeff Ruby Steaks",
+    title: "Fulleffort Punches His Derby Ticket at Turfway Park",
+    body: "Brad Cox's Fulleffort surged through the middle of the track under Irad Ortiz Jr. to win the Jeff Ruby Steaks (G3) by 2½ lengths in 1:49.94, earning 100 qualifying points and a guaranteed spot in the Churchill Downs starting gate. The win improved Fulleffort's record to 6-3-2-1 and cemented Cox/Ortiz as a power pairing on the Derby trail.",
+    date: "Mar 28, 2026",
+    url: "https://www.bloodhorse.com/horse-racing/stakes-result/290731/jeff-ruby-steaks-g3-fulleffort"
+  },
+  {
+    category: "Derby Trail",
+    title: "Super Prep Season in Full Swing — Arkansas & Florida Decide the Field",
+    body: "Today's Arkansas Derby and Florida Derby both offer 100 points, the maximum available before Churchill Downs. Winners of both races have historically dominated the Derby trail: the Florida Derby alone has produced 26 Derby winners. The Puma (Tampa Bay Derby) adds an intriguing speed angle at 3-1, while Renegade at Oaklawn shapes as the class of his field. The 152nd Run for the Roses goes May 2.",
+    date: "Mar 28, 2026",
+    url: "https://www.kentuckyderby.com/horses/news/kentucky-derby-prep-review-march-24-2026/"
+  }
+];
+
+// ─── STAKES DATA ──────────────────────────────────────────────────────────
+const stakesData = [
+  { date: "Mar 28", race: "Arkansas Derby", grade: "G1", track: "Oaklawn Park", dist: "1 1/8m Dirt", purse: "$1.5M", pts: "100", notes: "Key final prep — Renegade favored" },
+  { date: "Mar 28", race: "Curlin Florida Derby", grade: "G1", track: "Gulfstream Park", dist: "1 1/8m Dirt", purse: "$1M", pts: "100", notes: "Chief Wallabee vs Commandment rematch" },
+  { date: "Apr 5", race: "Blue Grass Stakes", grade: "G1", track: "Keeneland", dist: "1 1/16m Dirt", purse: "$1M", pts: "100", notes: "Final major prep before Derby" },
+  { date: "Apr 5", race: "Wood Memorial", grade: "G2", track: "Aqueduct", dist: "1 1/8m Dirt", purse: "$750K", pts: "100", notes: "Traditional NY Derby springboard" },
+  { date: "Apr 5", race: "Santa Anita Derby", grade: "G1", track: "Santa Anita", dist: "1 1/8m Dirt", purse: "$1M", pts: "100", notes: "West Coast qualifier" },
+  { date: "Apr 18", race: "Lexington Stakes", grade: "G3", track: "Keeneland", dist: "1 1/16m Dirt", purse: "$300K", pts: "20", notes: "Final points race; last chance" },
+  { date: "Apr 25", race: "Derby Trial", grade: "G3", track: "Churchill Downs", dist: "1m Dirt", purse: "$175K", pts: "20", notes: "On the Derby track" },
+  { date: "May 2", race: "Kentucky Derby", grade: "G1", track: "Churchill Downs", dist: "1 1/4m Dirt", purse: "$5M", pts: "—", notes: "The 152nd Run for the Roses" }
+];
+
+// ─── UPCOMING RACES ───────────────────────────────────────────────────────
+const upcomingRaces = [
+  {
+    track: "Oaklawn Park",
+    date: "Saturday, Mar 28",
+    chips: ["Arkansas Derby G1", "Smarty Jones S.", "8-Race Card"],
+    purse: "Featured: <strong>$1.5M</strong> · Total Card: <strong>$3.2M+</strong>"
+  },
+  {
+    track: "Gulfstream Park",
+    date: "Saturday, Mar 28",
+    chips: ["Florida Derby G1", "Orchid S. G3", "9-Race Card"],
+    purse: "Featured: <strong>$1M</strong> · Total Card: <strong>$2.5M+</strong>"
+  },
+  {
+    track: "Keeneland",
+    date: "Sunday, Apr 5",
+    chips: ["Blue Grass G1", "Limestone S.", "8-Race Card"],
+    purse: "Featured: <strong>$1M</strong> · Total Card: <strong>$2M+</strong>"
+  },
+  {
+    track: "Aqueduct",
+    date: "Sunday, Apr 5",
+    chips: ["Wood Memorial G2", "NYJC Oaks", "8-Race Card"],
+    purse: "Featured: <strong>$750K</strong> · Total Card: <strong>$1.5M+</strong>"
+  },
+  {
+    track: "Santa Anita Park",
+    date: "Sunday, Apr 5",
+    chips: ["Santa Anita Derby G1", "Santa Ana S.", "9-Race Card"],
+    purse: "Featured: <strong>$1M</strong> · Total Card: <strong>$2.2M+</strong>"
+  },
+  {
+    track: "Churchill Downs",
+    date: "Saturday, May 2",
+    chips: ["KENTUCKY DERBY G1", "Kentucky Oaks G1", "Full Derby Card"],
+    purse: "Featured: <strong>$5M</strong> · Oaks: <strong>$2M</strong>"
+  }
+];
+
+// ─── RENDER FUNCTIONS ─────────────────────────────────────────────────────
+
+function renderNews() {
+  const grid = document.getElementById('news-grid');
+  const label = document.getElementById('news-date-label');
+  if (newsData.length) label.textContent = newsData[0].date;
+
+  grid.innerHTML = newsData.map(n => {
+    const isLink = n.url && n.url.length > 0;
+    const tag = isLink ? 'a' : 'div';
+    const attrs = isLink ? `href="${n.url}" target="_blank" rel="noopener"` : '';
+    return `<${tag} class="news-card" ${attrs}>
+      <div class="news-category">${n.category}</div>
+      <div class="news-title">${n.title}</div>
+      <div class="news-body">${n.body}</div>
+      <div class="news-date">${n.date}</div>
+    </${tag}>`;
+  }).join('');
+}
+
+function gradeChip(g) {
+  const cls = g === 'G1' ? 'grade-g1' : g === 'G2' ? 'grade-g2' : 'grade-g3';
+  return `<span class="grade-chip ${cls}">${g}</span>`;
+}
+
+function renderStakes() {
+  const tbody = document.getElementById('stakes-tbody');
+  tbody.innerHTML = stakesData.map(s => `<tr>
+    <td class="race-date-col">${s.date}</td>
+    <td><strong>${s.race}</strong></td>
+    <td>${gradeChip(s.grade)}</td>
+    <td>${s.track}</td>
+    <td>${s.dist}</td>
+    <td class="purse-col">${s.purse}</td>
+    <td style="font-weight:600;color:var(--gold)">${s.pts}</td>
+    <td class="notes-col">${s.notes}</td>
+  </tr>`).join('');
+}
+
+function renderUpcoming() {
+  const grid = document.getElementById('upcoming-grid');
+  grid.innerHTML = upcomingRaces.map(r => `
+    <div class="track-card">
+      <div class="track-name">${r.track}</div>
+      <div class="track-date">${r.date}</div>
+      <div class="track-chips">
+        ${r.chips.map((c, i) => `<span class="track-chip${i === 0 ? ' featured' : ''}">${c}</span>`).join('')}
+      </div>
+      <div class="track-purse">${r.purse}</div>
+    </div>
+  `).join('');
+}
+
+// ─── COUNTDOWN ────────────────────────────────────────────────────────────
+function updateCountdown() {
+  const target = new Date('2026-05-02T18:57:00-04:00').getTime();
+  const now = Date.now();
+  const diff = target - now;
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent = '00';
+    document.getElementById('cd-secs').textContent = '00';
+    return;
+  }
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+  document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+  document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────
+renderNews();
+renderStakes();
+renderUpcoming();
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
