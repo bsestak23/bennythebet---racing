@@ -7,192 +7,153 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy:  #0b1622;
-  --navy2: #111e2d;
-  --navy3: #162436;
-  --gold:  #b8962a;
-  --gold2: #d4af3c;
-  --cream: #f0e8d4;
-  --cream2:#e8dcc8;
-  --cream3:#d9ccb4;
-  --muted: #7a8fa6;
-  --border:       rgba(184,150,42,0.18);
-  --border-cream: rgba(184,150,42,0.35);
-  --green: #4caf50;
-  --red:   #e57373;
+  --navy:#0b1622; --navy2:#111e2d; --navy3:#162436;
+  --gold:#b8962a; --gold2:#d4af3c;
+  --cream:#f0e8d4; --cream2:#e8dcc8; --cream3:#d9ccb4;
+  --muted:#7a8fa6; --border:rgba(184,150,42,0.18);
+  --border-cream:rgba(184,150,42,0.35);
+  --green:#4caf50; --red:#e57373;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { background: var(--navy); color: var(--cream); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
-
-/* NAV */
-nav { background: var(--navy); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
-.nav-brand { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--gold); letter-spacing: .02em; text-decoration: none; }
-.nav-brand span { color: var(--cream); font-weight: 400; }
-.nav-links { display: flex; gap: 28px; }
-.nav-links a { color: var(--muted); text-decoration: none; font-size: .82rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; transition: color .2s; }
-.nav-links a:hover { color: var(--gold); }
-
-/* HERO */
-.hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy3) 100%); border-bottom: 1px solid var(--border); padding: 52px 24px 44px; text-align: center; }
-.hero-eyebrow { font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,5vw,3.2rem); font-weight: 700; color: var(--cream); line-height: 1.15; margin-bottom: 14px; }
-.hero-title em { color: var(--gold); font-style: italic; }
-.hero-sub { color: var(--muted); font-size: .92rem; max-width: 500px; margin: 0 auto 28px; }
-.countdown-bar { display: inline-flex; align-items: center; gap: 24px; background: var(--navy2); border: 1px solid var(--border); border-radius: 4px; padding: 12px 28px; }
-.cd-label { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.cd-unit { text-align: center; }
-.cd-num { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--gold); line-height: 1; display: block; }
-.cd-lbl { font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.cd-sep { color: var(--gold); opacity: .35; font-size: 1.3rem; }
-
-/* SECTION */
-.section { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
-.section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px; border-bottom: 1px solid var(--border); padding-bottom: 14px; }
-.section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--cream); }
-.section-meta { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
-.section-div { width: 1px; height: 16px; background: var(--border); }
-
-/* NEWS GRID */
-.news-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border-cream); border: 1px solid var(--border-cream); }
-.news-card { background: var(--cream); color: var(--navy); padding: 22px 20px; display: flex; flex-direction: column; text-decoration: none; transition: background .15s; cursor: default; }
-a.news-card { cursor: pointer; }
-.news-card:hover { background: var(--cream2); }
-a.news-card .news-title::after { content: ' ↗'; font-size: .75em; opacity: .5; }
-.news-cat { font-size: .65rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-.news-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 10px; }
-.news-body { font-size: .82rem; color: #3a4a5c; line-height: 1.55; flex: 1; }
-.news-date { font-size: .68rem; color: var(--muted); margin-top: 12px; letter-spacing: .06em; }
-
-/* FILTER PILLS */
-.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; align-items: center; }
-.filter-lbl { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
-.filter-btn { padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--navy2); color: var(--muted); cursor: pointer; font-size: .75rem; font-weight: 500; font-family: 'Inter'; transition: all .15s; }
-.filter-btn:hover { border-color: var(--gold); color: var(--cream); }
-.filter-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 700; }
-
-/* STAKES TABLE */
-.tbl-wrap { overflow-x: auto; border: 1px solid var(--border-cream); border-radius: 2px; }
-table { width: 100%; border-collapse: collapse; background: var(--cream); color: var(--navy); font-size: .82rem; }
-thead th { background: var(--navy); color: var(--gold); padding: 11px 14px; font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); font-family: 'Inter'; }
-tbody td { padding: 10px 14px; border-bottom: 1px solid var(--cream3); vertical-align: middle; }
-tbody tr:last-child td { border-bottom: none; }
-tbody tr:hover td { background: var(--cream2); }
-tbody tr.hidden-row { display: none; }
-tbody tr.g1-row td { background: rgba(184,150,42,.04); }
-.grade-pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: .65rem; font-weight: 700; letter-spacing: .04em; font-family: 'Inter'; }
-.gp-g1 { background: var(--gold); color: var(--navy); }
-.gp-g2 { background: var(--navy3); color: var(--gold); border: 1px solid var(--gold); }
-.gp-g3 { background: transparent; color: var(--muted); border: 1px solid var(--cream3); }
-.pts-cell { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--gold); }
-.note-cell { font-size: .78rem; color: #5a6a7a; font-style: italic; }
-.date-cell { white-space: nowrap; color: var(--muted); font-size: .78rem; }
-
-/* UPCOMING CARDS */
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 16px; }
-.track-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 4px; padding: 20px; transition: border-color .15s; }
-.track-card:hover { border-color: var(--border-cream); }
-.tc-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
-.tc-date { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 12px; }
-.tc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-.tc-chip { background: var(--navy3); color: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 3px 9px; font-size: .7rem; font-weight: 500; }
-.tc-chip.featured { background: rgba(184,150,42,.15); color: var(--gold); border-color: rgba(184,150,42,.4); font-weight: 700; }
-.tc-purse { font-size: .75rem; color: var(--muted); }
-.tc-purse strong { color: var(--cream); }
-
-/* PICKS LAYOUT */
-.picks-layout { display: grid; grid-template-columns: 380px 1fr; gap: 24px; align-items: start; }
-
-/* PICK FORM */
-.pick-form { background: var(--navy2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
-.pf-head { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-.pf-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--cream); }
-.pf-body { padding: 20px; }
-.fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.fg-label { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-family: 'Inter'; }
-.fg-input { background: var(--navy3); border: 1px solid var(--border); border-radius: 3px; padding: 9px 12px; color: var(--cream); font-family: 'Inter'; font-size: .84rem; outline: none; transition: border-color .15s; width: 100%; }
-.fg-input:focus { border-color: var(--gold); }
-.fg-input::placeholder { color: var(--muted); }
-select.fg-input { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8fa6' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
-select.fg-input option, select.fg-input optgroup { background: var(--navy2); color: var(--cream); }
-
-/* TRACK TABS on picks board */
-.track-tabs { display: flex; gap: 0; overflow-x: auto; border-bottom: 1px solid var(--border); padding: 0 20px; }
-.track-tabs::-webkit-scrollbar { display: none; }
-.track-tab { padding: 10px 16px; font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .15s; font-family: 'Inter'; }
-.track-tab:hover { color: var(--cream); }
-.track-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-.pick-row.hidden-pick { display: none; }
-
-/* Stars */
-.stars-row { display: flex; gap: 4px; margin-top: 2px; }
-.star-btn { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: var(--muted); transition: color .1s; padding: 0; line-height: 1; }
-.star-btn.lit { color: var(--gold); }
-.star-btn:hover { color: var(--gold2); }
-
-.pf-actions { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
-.btn-submit { background: var(--gold); color: var(--navy); border: none; border-radius: 3px; padding: 10px 22px; font-family: 'Inter'; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: background .15s; }
-.btn-submit:hover { background: var(--gold2); }
-.btn-submit:disabled { opacity: .5; cursor: not-allowed; }
-.btn-clear { background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 3px; padding: 10px 16px; font-family: 'Inter'; font-size: .8rem; font-weight: 600; cursor: pointer; transition: color .15s; }
-.btn-clear:hover { color: var(--cream); }
-.f-status { font-size: .78rem; margin-left: 6px; }
-.f-status.ok  { color: var(--green); }
-.f-status.err { color: var(--red); }
-
-/* PICKS BOARD */
-.picks-board { background: var(--navy2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
-.pb-head { background: var(--navy); border-bottom: 1px solid var(--border); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
-.pb-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--cream); }
-.live-dot { display: flex; align-items: center; gap: 6px; font-size: .7rem; color: var(--gold); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-.live-dot::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 1.5s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
-
-/* PICK ROWS */
-.pick-row { padding: 14px 20px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 32px 1fr auto; gap: 12px; align-items: start; transition: background .1s; }
-.pick-row:last-child { border-bottom: none; }
-.pick-row:hover { background: rgba(255,255,255,.02); }
-.pick-row.win-row  { border-left: 3px solid var(--green); }
-.pick-row.loss-row { border-left: 3px solid var(--red); }
-.pick-num { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); text-align: center; line-height: 1.2; }
-.pick-info {}
-.pick-track-lbl { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
-.pick-horse { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--cream); line-height: 1.2; }
-.pick-horse a { color: inherit; text-decoration: underline dotted; }
-.pick-sub { font-size: .75rem; color: var(--muted); margin-top: 1px; }
-.pick-stars { font-size: .85rem; margin-top: 3px; letter-spacing: 1px; }
-.pick-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-.pick-odds { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); }
-.result-badge { font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; }
-.rb-win  { background: rgba(76,175,80,.12); color: var(--green); border: 1px solid rgba(76,175,80,.3); }
-.rb-loss { background: rgba(229,115,115,.1); color: var(--red); border: 1px solid rgba(229,115,115,.3); }
-.pick-actions { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
-.act-btn { padding: 3px 9px; border-radius: 3px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: .7rem; font-weight: 600; font-family: 'Inter'; transition: all .15s; }
-.act-btn:hover { color: var(--cream); border-color: var(--muted); }
-.act-btn.win-btn  { border-color: rgba(76,175,80,.3); color: rgba(76,175,80,.55); }
-.act-btn.win-btn:hover,  .act-btn.win-btn.on  { background: rgba(76,175,80,.12); color: var(--green); border-color: var(--green); }
-.act-btn.loss-btn { border-color: rgba(229,115,115,.3); color: rgba(229,115,115,.55); }
-.act-btn.loss-btn:hover, .act-btn.loss-btn.on { background: rgba(229,115,115,.1); color: var(--red); border-color: var(--red); }
-.act-btn.edit-btn:hover { color: var(--gold); border-color: rgba(184,150,42,.5); }
-.act-btn.del-btn:hover  { color: var(--red); border-color: rgba(229,115,115,.5); }
-.picks-empty { padding: 44px 20px; text-align: center; color: var(--muted); font-size: .85rem; font-style: italic; }
-
-/* FOOTER */
-footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; color: var(--muted); font-size: .78rem; }
-footer strong { color: var(--gold); }
-.footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 10px; }
-.footer-links a { color: var(--muted); text-decoration: none; }
-.footer-links a:hover { color: var(--gold); }
-
-@media(max-width:900px) { .news-grid { grid-template-columns:1fr 1fr; } .picks-layout { grid-template-columns:1fr; } }
-@media(max-width:600px) { .news-grid { grid-template-columns:1fr; } .nav-links { display:none; } .countdown-bar { gap:14px; padding:10px 16px; } }
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--navy);color:var(--cream);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
+nav{background:var(--navy);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--gold);letter-spacing:.02em;text-decoration:none;}
+.nav-brand span{color:var(--cream);font-weight:400;}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);border-bottom:1px solid var(--border);padding:52px 24px 44px;text-align:center;}
+.hero-eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:14px;}
+.hero-title em{color:var(--gold);font-style:italic;}
+.hero-sub{color:var(--muted);font-size:.92rem;max-width:500px;margin:0 auto 28px;}
+.countdown-bar{display:inline-flex;align-items:center;gap:24px;background:var(--navy2);border:1px solid var(--border);border-radius:4px;padding:12px 28px;}
+.cd-label{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--gold);line-height:1;display:block;}
+.cd-lbl{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.cd-sep{color:var(--gold);opacity:.35;font-size:1.3rem;}
+.section{max-width:1200px;margin:0 auto;padding:48px 24px;}
+.section-header{display:flex;align-items:baseline;gap:12px;margin-bottom:28px;border-bottom:1px solid var(--border);padding-bottom:14px;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--cream);}
+.section-meta{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.section-div{width:1px;height:16px;background:var(--border);}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-cream);border:1px solid var(--border-cream);}
+.news-card{background:var(--cream);color:var(--navy);padding:22px 20px;display:flex;flex-direction:column;text-decoration:none;transition:background .15s;cursor:default;}
+a.news-card{cursor:pointer;}
+.news-card:hover{background:var(--cream2);}
+a.news-card .news-title::after{content:' ↗';font-size:.75em;opacity:.5;}
+.news-cat{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.news-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:10px;}
+.news-body{font-size:.82rem;color:#3a4a5c;line-height:1.55;flex:1;}
+.news-date{font-size:.68rem;color:var(--muted);margin-top:12px;letter-spacing:.06em;}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center;}
+.filter-lbl{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:4px;}
+.filter-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--navy2);color:var(--muted);cursor:pointer;font-size:.75rem;font-weight:500;font-family:'Inter';transition:all .15s;}
+.filter-btn:hover{border-color:var(--gold);color:var(--cream);}
+.filter-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700;}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border-cream);border-radius:2px;}
+table{width:100%;border-collapse:collapse;background:var(--cream);color:var(--navy);font-size:.82rem;}
+thead th{background:var(--navy);color:var(--gold);padding:11px 14px;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:left;white-space:nowrap;border-bottom:1px solid var(--border);font-family:'Inter';}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--cream3);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:var(--cream2);}
+tbody tr.hidden-row{display:none;}
+tbody tr.g1-row td{background:rgba(184,150,42,.04);}
+.grade-pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.65rem;font-weight:700;letter-spacing:.04em;font-family:'Inter';}
+.gp-g1{background:var(--gold);color:var(--navy);}
+.gp-g2{background:var(--navy3);color:var(--gold);border:1px solid var(--gold);}
+.gp-g3{background:transparent;color:var(--muted);border:1px solid var(--cream3);}
+.pts-cell{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold);}
+.note-cell{font-size:.78rem;color:#5a6a7a;font-style:italic;}
+.date-cell{white-space:nowrap;color:var(--muted);font-size:.78rem;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+.track-card{background:var(--navy2);border:1px solid var(--border);border-radius:4px;padding:20px;transition:border-color .15s;}
+.track-card:hover{border-color:var(--border-cream);}
+.tc-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--cream);margin-bottom:4px;}
+.tc-date{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px;}
+.tc-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.tc-chip{background:var(--navy3);color:var(--cream);border:1px solid var(--border);border-radius:3px;padding:3px 9px;font-size:.7rem;font-weight:500;}
+.tc-chip.featured{background:rgba(184,150,42,.15);color:var(--gold);border-color:rgba(184,150,42,.4);font-weight:700;}
+.tc-purse{font-size:.75rem;color:var(--muted);}
+.tc-purse strong{color:var(--cream);}
+.picks-layout{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start;}
+.pick-form{background:var(--navy2);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.pf-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.pf-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);}
+.pf-body{padding:20px;}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.fg-label{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-family:'Inter';}
+.fg-input{background:var(--navy3);border:1px solid var(--border);border-radius:3px;padding:9px 12px;color:var(--cream);font-family:'Inter';font-size:.84rem;outline:none;transition:border-color .15s;width:100%;}
+.fg-input:focus{border-color:var(--gold);}
+.fg-input::placeholder{color:var(--muted);}
+select.fg-input{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8fa6' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
+select.fg-input option,select.fg-input optgroup{background:var(--navy2);color:var(--cream);}
+.track-tabs{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--border);padding:0 20px;}
+.track-tabs::-webkit-scrollbar{display:none;}
+.track-tab{padding:10px 16px;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;font-family:'Inter';}
+.track-tab:hover{color:var(--cream);}
+.track-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.pick-row.hidden-pick{display:none;}
+.stars-row{display:flex;gap:4px;margin-top:2px;}
+.star-btn{background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--muted);transition:color .1s;padding:0;line-height:1;}
+.star-btn.lit{color:var(--gold);}
+.star-btn:hover{color:var(--gold2);}
+.pf-actions{display:flex;gap:8px;align-items:center;margin-top:4px;}
+.btn-submit{background:var(--gold);color:var(--navy);border:none;border-radius:3px;padding:10px 22px;font-family:'Inter';font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .15s;}
+.btn-submit:hover{background:var(--gold2);}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;}
+.btn-clear{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:3px;padding:10px 16px;font-family:'Inter';font-size:.8rem;font-weight:600;cursor:pointer;transition:color .15s;}
+.btn-clear:hover{color:var(--cream);}
+.f-status{font-size:.78rem;margin-left:6px;}
+.f-status.ok{color:var(--green);}
+.f-status.err{color:var(--red);}
+.picks-board{background:var(--navy2);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.pb-head{background:var(--navy);border-bottom:1px solid var(--border);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+.pb-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);}
+.live-dot{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+.live-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.pick-row{padding:14px 20px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:start;transition:background .1s;}
+.pick-row:last-child{border-bottom:none;}
+.pick-row:hover{background:rgba(255,255,255,.02);}
+.pick-row.win-row{border-left:3px solid var(--green);}
+.pick-row.loss-row{border-left:3px solid var(--red);}
+.pick-num{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--gold);text-align:center;line-height:1.2;}
+.pick-track-lbl{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.pick-horse{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);line-height:1.2;}
+.pick-horse a{color:inherit;text-decoration:underline dotted;}
+.pick-sub{font-size:.75rem;color:var(--muted);margin-top:1px;}
+.pick-stars{font-size:.85rem;margin-top:3px;letter-spacing:1px;}
+.pick-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+.pick-odds{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--gold);}
+.result-badge{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;}
+.rb-win{background:rgba(76,175,80,.12);color:var(--green);border:1px solid rgba(76,175,80,.3);}
+.rb-loss{background:rgba(229,115,115,.1);color:var(--red);border:1px solid rgba(229,115,115,.3);}
+.pick-actions{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;}
+.act-btn{padding:3px 9px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:.7rem;font-weight:600;font-family:'Inter';transition:all .15s;}
+.act-btn:hover{color:var(--cream);border-color:var(--muted);}
+.act-btn.win-btn{border-color:rgba(76,175,80,.3);color:rgba(76,175,80,.55);}
+.act-btn.win-btn:hover,.act-btn.win-btn.on{background:rgba(76,175,80,.12);color:var(--green);border-color:var(--green);}
+.act-btn.loss-btn{border-color:rgba(229,115,115,.3);color:rgba(229,115,115,.55);}
+.act-btn.loss-btn:hover,.act-btn.loss-btn.on{background:rgba(229,115,115,.1);color:var(--red);border-color:var(--red);}
+.act-btn.edit-btn:hover{color:var(--gold);border-color:rgba(184,150,42,.5);}
+.act-btn.del-btn:hover{color:var(--red);border-color:rgba(229,115,115,.5);}
+.picks-empty{padding:44px 20px;text-align:center;color:var(--muted);font-size:.85rem;font-style:italic;}
+footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;color:var(--muted);font-size:.78rem;}
+footer strong{color:var(--gold);}
+.footer-links{display:flex;justify-content:center;gap:20px;margin-top:10px;}
+.footer-links a{color:var(--muted);text-decoration:none;}
+.footer-links a:hover{color:var(--gold);}
+@media(max-width:900px){.news-grid{grid-template-columns:1fr 1fr;}.picks-layout{grid-template-columns:1fr;}}
+@media(max-width:600px){.news-grid{grid-template-columns:1fr;}.nav-links{display:none;}.countdown-bar{gap:14px;padding:10px 16px;}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a class="nav-brand" href="#">BennyTheBet <span>Racing</span></a>
@@ -205,7 +166,6 @@ footer strong { color: var(--gold); }
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-eyebrow">Road to the Kentucky Derby &middot; 2026</div>
   <h1 class="hero-title">The Sport of <em>Kings</em></h1>
@@ -222,7 +182,6 @@ footer strong { color: var(--gold); }
   </div>
 </div>
 
-<!-- NEWS -->
 <section class="section" id="news">
   <div class="section-header">
     <h2 class="section-title">Racing News</h2>
@@ -232,7 +191,6 @@ footer strong { color: var(--gold); }
   <div class="news-grid" id="news-grid"></div>
 </section>
 
-<!-- STAKES -->
 <section class="section" id="stakes">
   <div class="section-header">
     <h2 class="section-title">Stakes Schedule</h2>
@@ -251,7 +209,6 @@ footer strong { color: var(--gold); }
   </div>
 </section>
 
-<!-- CARDS -->
 <section class="section" id="cards">
   <div class="section-header">
     <h2 class="section-title">Upcoming Cards</h2>
@@ -261,7 +218,6 @@ footer strong { color: var(--gold); }
   <div class="card-grid" id="card-grid"></div>
 </section>
 
-<!-- PICKS -->
 <section class="section" id="picks">
   <div class="section-header">
     <h2 class="section-title">My Picks</h2>
@@ -269,8 +225,6 @@ footer strong { color: var(--gold); }
     <span class="section-meta">Live &middot; @bennythebet</span>
   </div>
   <div class="picks-layout">
-
-    <!-- Form -->
     <div class="pick-form">
       <div class="pf-head">
         <div class="pf-title" id="form-title">Post a Pick</div>
@@ -288,7 +242,7 @@ footer strong { color: var(--gold); }
         </div>
         <div class="fg" style="margin-bottom:12px">
           <label class="fg-label">Horse</label>
-          <input class="fg-input" id="f-horse" placeholder="e.g. Renegade" />
+          <input class="fg-input" id="f-horse" placeholder="e.g. Commandment" />
         </div>
         <div class="fg-row">
           <div class="fg">
@@ -296,24 +250,16 @@ footer strong { color: var(--gold); }
             <select class="fg-input" id="f-bet-type">
               <option value="">Select...</option>
               <optgroup label="Straight">
-                <option>Win</option>
-                <option>Place</option>
-                <option>Show</option>
+                <option>Win</option><option>Place</option><option>Show</option>
               </optgroup>
               <optgroup label="Exotic">
-                <option>Exacta</option>
-                <option>Exacta Box</option>
-                <option>Trifecta</option>
-                <option>Trifecta Box</option>
-                <option>Superfecta</option>
-                <option>Superfecta Box</option>
+                <option>Exacta</option><option>Exacta Box</option>
+                <option>Trifecta</option><option>Trifecta Box</option>
+                <option>Superfecta</option><option>Superfecta Box</option>
               </optgroup>
               <optgroup label="Multi-Race">
-                <option>Daily Double</option>
-                <option>Pick 3</option>
-                <option>Pick 4</option>
-                <option>Pick 5</option>
-                <option>Pick 6</option>
+                <option>Daily Double</option><option>Pick 3</option>
+                <option>Pick 4</option><option>Pick 5</option><option>Pick 6</option>
               </optgroup>
             </select>
           </div>
@@ -342,13 +288,12 @@ footer strong { color: var(--gold); }
         </div>
         <div class="pf-actions">
           <button class="btn-submit" id="submit-pick">Post Pick</button>
-          <button class="btn-clear"  id="clear-pick">Clear</button>
+          <button class="btn-clear" id="clear-pick">Clear</button>
           <span class="f-status" id="form-status"></span>
         </div>
       </div>
     </div>
 
-    <!-- Board -->
     <div class="picks-board">
       <div class="pb-head">
         <div class="pb-title">Active Plays</div>
@@ -357,7 +302,6 @@ footer strong { color: var(--gold); }
       <div class="track-tabs" id="pick-track-tabs"></div>
       <div id="picks-list"><div class="picks-empty">Loading picks&hellip;</div></div>
     </div>
-
   </div>
 </section>
 
@@ -366,198 +310,177 @@ footer strong { color: var(--gold); }
   <p style="margin-top:5px">Not financial advice &middot; Bet responsibly &middot; 21+</p>
   <div class="footer-links">
     <a href="https://x.com/bennythebet" target="_blank">@bennythebet on X</a>
-    <a href="https://bsestak23.github.io/bennythebet-racing/" target="_blank">Live Site</a>
   </div>
 </footer>
 
 <!-- FIREBASE -->
 <script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-  import { getFirestore, collection, onSnapshot, query, orderBy, addDoc, updateDoc, deleteDoc, doc, serverTimestamp }
-    from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, onSnapshot, query, orderBy, addDoc, updateDoc, deleteDoc, doc, serverTimestamp }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBennyTheBetFirebaseKey",
-    authDomain: "bennythebet.firebaseapp.com",
-    projectId: "bennythebet",
-    storageBucket: "bennythebet.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:bennythebet"
+const firebaseConfig = {
+  apiKey:            "AIzaSyBennyTheBetFirebaseKey",
+  authDomain:        "bennythebet.firebaseapp.com",
+  projectId:         "bennythebet",
+  storageBucket:     "bennythebet.appspot.com",
+  messagingSenderId: "123456789",
+  appId:             "1:123456789:web:bennythebet"
+};
+
+let starValue = 0;
+const starBtns = document.querySelectorAll('#star-input .star-btn');
+function paintStars(n) { starBtns.forEach(b => b.classList.toggle('lit', +b.dataset.v <= n)); }
+starBtns.forEach(b => {
+  b.addEventListener('click', () => { starValue = +b.dataset.v === starValue ? 0 : +b.dataset.v; paintStars(starValue); });
+  b.addEventListener('mouseenter', () => paintStars(+b.dataset.v));
+  b.addEventListener('mouseleave', () => paintStars(starValue));
+});
+function resetStars() { starValue = 0; paintStars(0); }
+
+let db, editingId = null;
+const FIELDS = ['f-track','f-race','f-horse','f-odds','f-notes','f-url'];
+const formTitle  = document.getElementById('form-title');
+const submitBtn  = document.getElementById('submit-pick');
+const clearBtn   = document.getElementById('clear-pick');
+const statusEl   = document.getElementById('form-status');
+
+function clearForm() {
+  FIELDS.forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-bet-type').value = '';
+  resetStars(); editingId = null;
+  formTitle.textContent = 'Post a Pick';
+  submitBtn.textContent = 'Post Pick';
+  statusEl.textContent  = ''; statusEl.className = 'f-status';
+}
+clearBtn.addEventListener('click', clearForm);
+
+submitBtn.addEventListener('click', async () => {
+  const horse = document.getElementById('f-horse').value.trim();
+  const track = document.getElementById('f-track').value.trim();
+  if (!horse || !track) { statusEl.textContent = 'Track and Horse required.'; statusEl.className = 'f-status err'; return; }
+  submitBtn.disabled = true;
+  statusEl.textContent = editingId ? 'Saving\u2026' : 'Posting\u2026'; statusEl.className = 'f-status';
+  const payload = {
+    track, horse,
+    race:     document.getElementById('f-race').value.trim(),
+    bet_type: document.getElementById('f-bet-type').value,
+    odds:     document.getElementById('f-odds').value.trim(),
+    stars:    starValue,
+    notes:    document.getElementById('f-notes').value.trim(),
+    url:      document.getElementById('f-url').value.trim(),
   };
-
-  // ── Star rating input ──────────────────────────────────────────────
-  let starValue = 0;
-  const starBtns = document.querySelectorAll('#star-input .star-btn');
-  function paintStars(n) { starBtns.forEach(b => b.classList.toggle('lit', +b.dataset.v <= n)); }
-  starBtns.forEach(b => {
-    b.addEventListener('click', () => { starValue = +b.dataset.v === starValue ? 0 : +b.dataset.v; paintStars(starValue); });
-    b.addEventListener('mouseenter', () => paintStars(+b.dataset.v));
-    b.addEventListener('mouseleave', () => paintStars(starValue));
-  });
-  function resetStars() { starValue = 0; paintStars(0); }
-
-  // ── Form state ─────────────────────────────────────────────────────
-  let db, editingId = null;
-  const FIELDS = ['f-track','f-race','f-horse','f-odds','f-notes','f-url'];
-  const formTitle = document.getElementById('form-title');
-  const submitBtn = document.getElementById('submit-pick');
-  const clearBtn  = document.getElementById('clear-pick');
-  const statusEl  = document.getElementById('form-status');
-
-  function clearForm() {
-    FIELDS.forEach(id => document.getElementById(id).value = '');
-    document.getElementById('f-bet-type').value = '';
-    resetStars();
-    editingId = null;
-    formTitle.textContent = 'Post a Pick';
-    submitBtn.textContent = 'Post Pick';
-    statusEl.textContent = '';
-    statusEl.className = 'f-status';
-  }
-  clearBtn.addEventListener('click', clearForm);
-
-  submitBtn.addEventListener('click', async () => {
-    const horse = document.getElementById('f-horse').value.trim();
-    const track = document.getElementById('f-track').value.trim();
-    if (!horse || !track) { statusEl.textContent = 'Track and Horse required.'; statusEl.className = 'f-status err'; return; }
-    submitBtn.disabled = true;
-    statusEl.textContent = editingId ? 'Saving\u2026' : 'Posting\u2026';
-    statusEl.className = 'f-status';
-
-    const payload = {
-      track, horse,
-      race:     document.getElementById('f-race').value.trim(),
-      bet_type: document.getElementById('f-bet-type').value,
-      odds:     document.getElementById('f-odds').value.trim(),
-      stars:    starValue,
-      notes:    document.getElementById('f-notes').value.trim(),
-      url:      document.getElementById('f-url').value.trim(),
-    };
-    try {
-      if (editingId) {
-        await updateDoc(doc(db, 'picks', editingId), payload);
-        statusEl.textContent = '\u2713 Updated!';
-      } else {
-        payload.date = new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
-        payload.ts   = serverTimestamp();
-        await addDoc(collection(db, 'picks'), payload);
-        statusEl.textContent = '\u2713 Pick posted!';
-      }
-      statusEl.className = 'f-status ok';
-      setTimeout(clearForm, 1600);
-    } catch(e) {
-      statusEl.textContent = 'Error \u2014 check Firebase config.';
-      statusEl.className = 'f-status err';
-    }
-    submitBtn.disabled = false;
-  });
-
-  window._editPick = (id, data) => {
-    editingId = id;
-    formTitle.textContent = 'Edit Pick';
-    submitBtn.textContent = 'Save Changes';
-    document.getElementById('f-track').value    = data.track    || '';
-    document.getElementById('f-race').value     = data.race     || '';
-    document.getElementById('f-horse').value    = data.horse    || '';
-    document.getElementById('f-bet-type').value = data.bet_type || '';  // sets select value
-    document.getElementById('f-odds').value     = data.odds     || '';
-    document.getElementById('f-notes').value    = data.notes    || '';
-    document.getElementById('f-url').value      = data.url      || '';
-    starValue = data.stars || 0;
-    paintStars(starValue);
-    document.getElementById('picks').scrollIntoView({ behavior:'smooth', block:'start' });
-  };
-
-  // ── Firebase init & live board ─────────────────────────────────────
   try {
-    const app = initializeApp(firebaseConfig);
-    db = getFirestore(app);
-    const q = query(collection(db, 'picks'), orderBy('ts', 'desc'));
-
-    let activeTrackFilter = 'All';
-
-    onSnapshot(q, snap => {
-      const list    = document.getElementById('picks-list');
-      const tabsBar = document.getElementById('pick-track-tabs');
-
-      if (snap.empty) {
-        tabsBar.innerHTML = '';
-        list.innerHTML = '<div class="picks-empty">No picks yet. Post one using the form.</div>';
-        return;
-      }
-
-      // Build track tab list
-      const tracks = ['All', ...new Set(snap.docs.map(d => d.data().track).filter(Boolean))];
-      if (!tracks.includes(activeTrackFilter)) activeTrackFilter = 'All';
-      tabsBar.innerHTML = tracks.map(t =>
-        `<button class="track-tab${t===activeTrackFilter?' active':''}" data-track="${t}">${t}</button>`
-      ).join('');
-      tabsBar.querySelectorAll('.track-tab').forEach(btn => {
-        btn.addEventListener('click', () => {
-          activeTrackFilter = btn.dataset.track;
-          tabsBar.querySelectorAll('.track-tab').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          document.querySelectorAll('.pick-row').forEach(row => {
-            row.classList.toggle('hidden-pick', activeTrackFilter !== 'All' && row.dataset.track !== activeTrackFilter);
-          });
-        });
-      });
-
-      list.innerHTML = snap.docs.map((ds, i) => {
-        const p   = ds.data(), id = ds.id;
-        const res = p.result || '';
-        const rowCls = res === 'win' ? 'win-row' : res === 'loss' ? 'loss-row' : '';
-        const hidden = activeTrackFilter !== 'All' && p.track !== activeTrackFilter ? ' hidden-pick' : '';
-        const badge  = res ? `<span class="result-badge rb-${res}">${res === 'win' ? '\u2713 Win' : '\u2717 Loss'}</span>` : '';
-        const starsHtml = p.stars ? '\u2605'.repeat(p.stars) + '\u2606'.repeat(5 - p.stars) : '';
-        const horseHtml = p.url ? `<a href="${p.url}" target="_blank" rel="noopener">${p.horse||''}</a>` : (p.horse||'');
-        const pd = JSON.stringify({ track:p.track||'', race:p.race||'', horse:p.horse||'', bet_type:p.bet_type||'', odds:p.odds||'', stars:p.stars||0, notes:p.notes||'', url:p.url||'' }).replace(/'/g,"&#39;");
-        return `<div class="pick-row ${rowCls}${hidden}" data-id="${id}" data-track="${p.track||''}">
-          <div class="pick-num">R${p.race || i+1}</div>
-          <div class="pick-info">
-            <div class="pick-track-lbl">${p.track||''}${badge}</div>
-            <div class="pick-horse">${horseHtml}</div>
-            <div class="pick-sub">${p.bet_type||''}${p.notes ? ' \xb7 ' + p.notes : ''}</div>
-            ${starsHtml ? `<div class="pick-stars" style="color:var(--gold)">${starsHtml}</div>` : ''}
-            <div class="pick-actions">
-              <button class="act-btn win-btn  ${res==='win'?'on':''}"  data-id="${id}" data-result="win">W</button>
-              <button class="act-btn loss-btn ${res==='loss'?'on':''}" data-id="${id}" data-result="loss">L</button>
-              <button class="act-btn edit-btn" data-id="${id}" data-pick='${pd}'>Edit</button>
-              <button class="act-btn del-btn"  data-id="${id}">\uD83D\uDDD1</button>
-            </div>
-          </div>
-          <div class="pick-right">
-            <div class="pick-odds">${p.odds||''}</div>
-          </div>
-        </div>`;
-      }).join('');
-
-      list.querySelectorAll('.win-btn,.loss-btn').forEach(btn => {
-        btn.addEventListener('click', async e => {
-          e.stopPropagation();
-          const already = btn.classList.contains('on');
-          await updateDoc(doc(db,'picks',btn.dataset.id), { result: already ? '' : btn.dataset.result });
-        });
-      });
-      list.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', e => { e.stopPropagation(); window._editPick(btn.dataset.id, JSON.parse(btn.dataset.pick)); });
-      });
-      list.querySelectorAll('.del-btn').forEach(btn => {
-        btn.addEventListener('click', async e => {
-          e.stopPropagation();
-          if (confirm('Delete this pick?')) await deleteDoc(doc(db,'picks',btn.dataset.id));
-        });
-      });
-    }, () => {
-      document.getElementById('picks-list').innerHTML = '<div class="picks-empty">Unable to load picks \u2014 check Firebase config.</div>';
-    });
+    if (editingId) {
+      await updateDoc(doc(db, 'picks', editingId), payload);
+      statusEl.textContent = '\u2713 Updated!';
+    } else {
+      payload.date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      payload.ts   = serverTimestamp();
+      await addDoc(collection(db,'picks'), payload);
+      statusEl.textContent = '\u2713 Pick posted!';
+    }
+    statusEl.className = 'f-status ok';
+    setTimeout(clearForm, 1600);
   } catch(e) {
-    document.getElementById('picks-list').innerHTML = '<div class="picks-empty">Firebase not configured.</div>';
+    statusEl.textContent = 'Error \u2014 check Firebase config.'; statusEl.className = 'f-status err';
   }
+  submitBtn.disabled = false;
+});
+
+window._editPick = (id, data) => {
+  editingId = id; formTitle.textContent = 'Edit Pick'; submitBtn.textContent = 'Save Changes';
+  document.getElementById('f-track').value    = data.track    || '';
+  document.getElementById('f-race').value     = data.race     || '';
+  document.getElementById('f-horse').value    = data.horse    || '';
+  document.getElementById('f-bet-type').value = data.bet_type || '';
+  document.getElementById('f-odds').value     = data.odds     || '';
+  document.getElementById('f-notes').value    = data.notes    || '';
+  document.getElementById('f-url').value      = data.url      || '';
+  starValue = data.stars || 0; paintStars(starValue);
+  document.getElementById('picks').scrollIntoView({behavior:'smooth',block:'start'});
+};
+
+try {
+  const app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
+  const q = query(collection(db,'picks'), orderBy('ts','desc'));
+  let activeTrackFilter = 'All';
+
+  onSnapshot(q, snap => {
+    const list    = document.getElementById('picks-list');
+    const tabsBar = document.getElementById('pick-track-tabs');
+    if (snap.empty) {
+      tabsBar.innerHTML = '';
+      list.innerHTML = '<div class="picks-empty">No picks yet. Post one using the form.</div>';
+      return;
+    }
+    const tracks = ['All', ...new Set(snap.docs.map(d => d.data().track).filter(Boolean))];
+    if (!tracks.includes(activeTrackFilter)) activeTrackFilter = 'All';
+    tabsBar.innerHTML = tracks.map(t =>
+      `<button class="track-tab${t===activeTrackFilter?' active':''}" data-track="${t}">${t}</button>`
+    ).join('');
+    tabsBar.querySelectorAll('.track-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeTrackFilter = btn.dataset.track;
+        tabsBar.querySelectorAll('.track-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.pick-row').forEach(row => {
+          row.classList.toggle('hidden-pick', activeTrackFilter !== 'All' && row.dataset.track !== activeTrackFilter);
+        });
+      });
+    });
+    list.innerHTML = snap.docs.map((ds,i) => {
+      const p = ds.data(), id = ds.id;
+      const res    = p.result || '';
+      const rowCls = res==='win' ? 'win-row' : res==='loss' ? 'loss-row' : '';
+      const hidden = activeTrackFilter !== 'All' && p.track !== activeTrackFilter ? ' hidden-pick' : '';
+      const badge  = res ? `<span class="result-badge rb-${res}">${res==='win'?'\u2713 Win':'\u2717 Loss'}</span>` : '';
+      const starsHtml = p.stars ? '\u2605'.repeat(p.stars)+'\u2606'.repeat(5-p.stars) : '';
+      const horseHtml = p.url  ? `<a href="${p.url}" target="_blank" rel="noopener">${p.horse||''}</a>` : (p.horse||'');
+      const pd = JSON.stringify({track:p.track||'',race:p.race||'',horse:p.horse||'',bet_type:p.bet_type||'',odds:p.odds||'',stars:p.stars||0,notes:p.notes||'',url:p.url||''}).replace(/'/g,"&#39;");
+      return `<div class="pick-row ${rowCls}${hidden}" data-id="${id}" data-track="${p.track||''}">
+        <div class="pick-num">R${p.race||i+1}</div>
+        <div class="pick-info">
+          <div class="pick-track-lbl">${p.track||''}${badge}</div>
+          <div class="pick-horse">${horseHtml}</div>
+          <div class="pick-sub">${p.bet_type||''}${p.notes?' &middot; '+p.notes:''}</div>
+          ${starsHtml?`<div class="pick-stars" style="color:var(--gold)">${starsHtml}</div>`:''}
+          <div class="pick-actions">
+            <button class="act-btn win-btn ${res==='win'?'on':''}" data-id="${id}" data-result="win">W</button>
+            <button class="act-btn loss-btn ${res==='loss'?'on':''}" data-id="${id}" data-result="loss">L</button>
+            <button class="act-btn edit-btn" data-id="${id}" data-pick='${pd}'>Edit</button>
+            <button class="act-btn del-btn" data-id="${id}">&#128465;</button>
+          </div>
+        </div>
+        <div class="pick-right"><div class="pick-odds">${p.odds||''}</div></div>
+      </div>`;
+    }).join('');
+    list.querySelectorAll('.win-btn,.loss-btn').forEach(btn => {
+      btn.addEventListener('click', async e => {
+        e.stopPropagation();
+        await updateDoc(doc(db,'picks',btn.dataset.id), { result: btn.classList.contains('on') ? '' : btn.dataset.result });
+      });
+    });
+    list.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); window._editPick(btn.dataset.id, JSON.parse(btn.dataset.pick)); });
+    });
+    list.querySelectorAll('.del-btn').forEach(btn => {
+      btn.addEventListener('click', async e => {
+        e.stopPropagation();
+        if (confirm('Delete this pick?')) await deleteDoc(doc(db,'picks',btn.dataset.id));
+      });
+    });
+  }, () => {
+    document.getElementById('picks-list').innerHTML = '<div class="picks-empty">Unable to load picks \u2014 try refreshing.</div>';
+  });
+} catch(e) {
+  document.getElementById('picks-list').innerHTML = '<div class="picks-empty">Firebase not configured.</div>';
+}
 </script>
 
 <script>
-// ── COUNTDOWN ────────────────────────────────────────────────────────
+// ── COUNTDOWN ──────────────────────────────────────────────────────
 function tick() {
   const diff = new Date('2026-05-02T18:57:00-04:00').getTime() - Date.now();
   if (diff <= 0) { ['d','h','m','s'].forEach(u => document.getElementById('cd-'+u).textContent='00'); return; }
@@ -568,59 +491,75 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
-// ── NEWS ─────────────────────────────────────────────────────────────
+// ── NEWS — Updated Apr 1, 2026 ─────────────────────────────────────
 const newsData = [
-  { category:"Arkansas Derby",  title:"Renegade Faces Baffert's Litmus Test in $1.5M Oaklawn Showdown",         body:"Pletcher's Renegade — the lone horse in the field with experience at 1 1/8 miles — is the 3-2 morning-line chalk with Irad Ortiz Jr. aboard, who passed up a Florida Derby mount to stay the course. Litmus Test (Baffert) and Southwest winner Silent Tactic loom as the chief dangers in the 100-point G1 at Oaklawn.", date:"Mar 28, 2026", url:"https://www.bloodhorse.com/horse-racing/race/usa/op/2026/3/28/13/arkansas-derby-g1" },
-  { category:"Florida Derby",   title:"Chief Wallabee Seeks Redemption in G1 Gulfstream Rematch",                body:"Chief Wallabee (2-1 program fav) looks to reverse a runner-up finish in the Fountain of Youth against the Brad Cox-trained Commandment and Todd Pletcher's undefeated Nearly, who is 3-for-3 at Gulfstream. Tampa Bay Derby winner The Puma is the wild card. All four contest 100 points on the Road to the Kentucky Derby.", date:"Mar 28, 2026", url:"https://entries.horseracingnation.com/entries-results/gulfstream-park/2026-03-28" },
-  { category:"Dubai World Cup", title:"Dark Saffron Rules the Golden Shaheen; Native Approach Nabs Al Quoz Sprint", body:"Dubai World Cup night delivered international drama at Meydan: Dark Saffron romped in the $2M Dubai Golden Shaheen (G1), Native Approach prevailed in the Al Quoz Sprint (G1), and Japan's ADMIRE DAYTONA took the UAE Derby. Forever Young headlined the $12M World Cup itself.", date:"Mar 28, 2026", url:"https://dubairacingclub.com/race-results-replays/dwc-race-replay-race-6-dubai-golden-shaheen-march-28-2026/" },
-  { category:"Louisiana Derby", title:"Emerging Market Survives Thriller to Bank 100 Derby Points",              body:"Chad Brown's Emerging Market edged Pavlovian by a head in a tense Louisiana Derby (G2) at Fair Grounds, covering 1 3/16 miles in 1:55.18 to top the leaderboard. The TDN Rising Star now holds a clear points advantage heading into the final prep season.", date:"Mar 28, 2026", url:"https://www.theracingbiz.com/2026/03/22/triple-crown-trail-emerging-market-takes-louisiana-derby/" },
-  { category:"Jeff Ruby Steaks", title:"Fulleffort Punches His Derby Ticket at Turfway Park",                   body:"Brad Cox's Fulleffort surged through the middle of the track under Irad Ortiz Jr. to win the Jeff Ruby Steaks (G3) by 2\u00bd lengths in 1:49.94, earning 100 qualifying points and a guaranteed spot in the Churchill Downs starting gate. Record now 6-3-2-1.", date:"Mar 28, 2026", url:"https://www.bloodhorse.com/horse-racing/stakes-result/290731/jeff-ruby-steaks-g3-fulleffort" },
-  { category:"Derby Trail",     title:"Super Prep Season in Full Swing \u2014 Arkansas & Florida Decide the Field", body:"Today's Arkansas Derby and Florida Derby both offer 100 points, the maximum available before Churchill Downs. The Florida Derby alone has produced 26 Derby winners. The Puma adds an intriguing speed angle while Renegade at Oaklawn shapes as the class of his field. The 152nd Run for the Roses goes May 2.", date:"Mar 28, 2026", url:"https://www.kentuckyderby.com/horses/news/kentucky-derby-prep-review-march-24-2026/" }
+  { category:"Arkansas Derby Results",
+    title:"Renegade Dominates by 4 Lengths — Punches Derby Ticket at Oaklawn",
+    body:"Todd Pletcher's Renegade ran 1 1/8 miles in 1:49.70 under Irad Ortiz Jr. to demolish the field by four widening lengths before an Oaklawn record crowd. Silent Tactic finished second, Taptastic third. Renegade now sits at 125 total Derby points and moves into the top 5 on the leaderboard.",
+    date:"Apr 1, 2026", url:"" },
+  { category:"Florida Derby Results",
+    title:"Commandment Edges The Puma by a Nose — Now #1 on Derby Points Board",
+    body:"Brad Cox's Commandment surged widest of all in the stretch under Flavien Prat to nail The Puma in the final stride of the Florida Derby (G1) at Gulfstream, hitting the wire in 1:49.99. Commandment is now 4-for-5 overall and unbeaten in 2026 with 150 total Derby points — the new #1 on the leaderboard.",
+    date:"Apr 1, 2026", url:"" },
+  { category:"Derby Trail",
+    title:"Points Leaderboard Shakeup — Commandment #1, Renegade #2 After Super Saturday",
+    body:"Saturday's 100-point preps reshuffled the Derby leaderboard. Commandment leads at 150 points, Renegade second at 125. The Puma and Silent Tactic also cracked the top 10. Three final 100-point preps remain this weekend: Blue Grass (Keeneland), Santa Anita Derby, and Wood Memorial (Aqueduct) — all April 5.",
+    date:"Apr 1, 2026", url:"" },
+  { category:"Santa Anita Derby",
+    title:"Baffert's Potente & Cherokee Nation Lead 7-Horse Santa Anita Derby Field — April 5",
+    body:"Bob Baffert sends out both Potente and Cherokee Nation in the $1M Santa Anita Derby (G1) this Saturday, looking to add to his record Derby wins. Cherokee Nation brings speed; Potente brings consistency. Seven entered for the final major West Coast qualifier worth 100 Derby points.",
+    date:"Apr 1, 2026", url:"" },
+  { category:"Wood Memorial",
+    title:"Wood Memorial Field Set — Talk to Me Jimmy Tops 13-Horse Card at Aqueduct",
+    body:"The Wood Memorial (G2) at Aqueduct on April 5 drew a full field of 13 including Talk to Me Jimmy, Steel, and Napoleon Solo. Iron Honor and Ottinho round out the deep card. The traditional New York Derby springboard offers 100 points to the winner.",
+    date:"Apr 1, 2026", url:"" },
+  { category:"Derby Countdown",
+    title:"31 Days to the Kentucky Derby — Final Three 100-Point Preps This Weekend",
+    body:"The 152nd Kentucky Derby goes May 2 at Churchill Downs. Only the Blue Grass (G1), Santa Anita Derby (G1), and Wood Memorial (G2) remain as major 100-point preps — all this Saturday April 5. The final 20-horse field will crystallize after this weekend. The countdown clock is ticking.",
+    date:"Apr 1, 2026", url:"" }
 ];
 
-// ── STAKES ───────────────────────────────────────────────────────────
+// ── STAKES — Updated Apr 1, 2026 ──────────────────────────────────
 const stakesData = [
-  { date:"Mar 28", race:"Arkansas Derby",       grade:"G1", track:"Oaklawn Park",    dist:"1 1/8m Dirt",  purse:"$1.5M", pts:"100", notes:"Renegade vs Litmus Test (Baffert)" },
-  { date:"Mar 28", race:"Curlin Florida Derby", grade:"G1", track:"Gulfstream Park", dist:"1 1/8m Dirt",  purse:"$1M",   pts:"100", notes:"Chief Wallabee / Commandment rematch" },
-  { date:"Apr 4",  race:"Spiral Stakes",        grade:"G3", track:"Turfway Park",    dist:"1 1/16m Dirt", purse:"$400K", pts:"20",  notes:"Late bubble points option" },
-  { date:"Apr 5",  race:"Blue Grass Stakes",    grade:"G1", track:"Keeneland",       dist:"1 1/16m Dirt", purse:"$1M",   pts:"100", notes:"Final major Keeneland prep" },
-  { date:"Apr 5",  race:"Wood Memorial",        grade:"G2", track:"Aqueduct",        dist:"1 1/8m Dirt",  purse:"$750K", pts:"100", notes:"Traditional NY Derby springboard" },
-  { date:"Apr 5",  race:"Santa Anita Derby",    grade:"G1", track:"Santa Anita",     dist:"1 1/8m Dirt",  purse:"$1M",   pts:"100", notes:"West Coast qualifier" },
-  { date:"Apr 5",  race:"Gazelle Stakes",       grade:"G3", track:"Aqueduct",        dist:"1 1/16m Dirt", purse:"$250K", pts:"\u2014", notes:"Oaks trail \u2014 fillies" },
-  { date:"Apr 11", race:"Oaklawn Handicap",     grade:"G2", track:"Oaklawn Park",    dist:"1 1/8m Dirt",  purse:"$750K", pts:"\u2014", notes:"Older horse feature" },
-  { date:"Apr 12", race:"Apple Blossom H.",     grade:"G1", track:"Oaklawn Park",    dist:"1 1/16m Dirt", purse:"$600K", pts:"\u2014", notes:"Premier fillies/mares feature" },
-  { date:"Apr 18", race:"Ashland Stakes",       grade:"G1", track:"Keeneland",       dist:"1 1/16m Dirt", purse:"$600K", pts:"\u2014", notes:"Key Kentucky Oaks prep" },
-  { date:"Apr 18", race:"Lexington Stakes",     grade:"G3", track:"Keeneland",       dist:"1 1/16m Dirt", purse:"$300K", pts:"20",  notes:"Final Derby points race" },
-  { date:"Apr 25", race:"Derby Trial",          grade:"G3", track:"Churchill Downs", dist:"1m Dirt",      purse:"$175K", pts:"20",  notes:"On the Derby track" },
-  { date:"Apr 25", race:"La Troienne Stakes",   grade:"G1", track:"Churchill Downs", dist:"7f Dirt",      purse:"$500K", pts:"\u2014", notes:"Churchill Oaks Day undercard" },
-  { date:"May 1",  race:"Kentucky Oaks",        grade:"G1", track:"Churchill Downs", dist:"1 1/8m Dirt",  purse:"$2M",   pts:"\u2014", notes:"Oaks Day \u2014 top fillies" },
-  { date:"May 2",  race:"Kentucky Derby",       grade:"G1", track:"Churchill Downs", dist:"1 1/4m Dirt",  purse:"$5M",   pts:"\u2014", notes:"152nd Run for the Roses" },
-  { date:"May 3",  race:"Pat Day Mile",         grade:"G2", track:"Churchill Downs", dist:"1m Turf",      purse:"$500K", pts:"\u2014", notes:"Derby Weekend undercard" },
-  { date:"May 16", race:"Preakness Stakes",     grade:"G1", track:"Pimlico",         dist:"1 3/16m Dirt", purse:"$2M",   pts:"\u2014", notes:"Triple Crown leg 2" },
-  { date:"Jun 6",  race:"Belmont Stakes",       grade:"G1", track:"Saratoga",        dist:"1 1/2m Dirt",  purse:"$2M",   pts:"\u2014", notes:"Triple Crown leg 3" },
+  { date:"Mar 28", race:"Arkansas Derby",       grade:"G1", track:"Oaklawn Park",    dist:"1 1/8m Dirt",  purse:"$1.5M",  pts:"100", notes:"RESULT: Renegade by 4 lengths" },
+  { date:"Mar 28", race:"Curlin Florida Derby", grade:"G1", track:"Gulfstream Park", dist:"1 1/8m Dirt",  purse:"$1M",    pts:"100", notes:"RESULT: Commandment by a nose" },
+  { date:"Apr 4",  race:"Spiral Stakes",        grade:"G3", track:"Turfway Park",    dist:"1 1/16m Dirt", purse:"$400K",  pts:"20",  notes:"Late bubble points option" },
+  { date:"Apr 5",  race:"Blue Grass Stakes",    grade:"G1", track:"Keeneland",       dist:"1 1/16m Dirt", purse:"$1M",    pts:"100", notes:"Final major Keeneland prep" },
+  { date:"Apr 5",  race:"Wood Memorial",        grade:"G2", track:"Aqueduct",        dist:"1 1/8m Dirt",  purse:"$750K",  pts:"100", notes:"Talk to Me Jimmy leads 13-horse field" },
+  { date:"Apr 5",  race:"Santa Anita Derby",    grade:"G1", track:"Santa Anita",     dist:"1 1/8m Dirt",  purse:"$1M",    pts:"100", notes:"Baffert: Potente & Cherokee Nation" },
+  { date:"Apr 5",  race:"Gazelle Stakes",       grade:"G3", track:"Aqueduct",        dist:"1 1/16m Dirt", purse:"$250K",  pts:"\u2014", notes:"Oaks trail \u2014 fillies" },
+  { date:"Apr 11", race:"Oaklawn Handicap",     grade:"G2", track:"Oaklawn Park",    dist:"1 1/8m Dirt",  purse:"$750K",  pts:"\u2014", notes:"Older horse feature" },
+  { date:"Apr 12", race:"Apple Blossom H.",     grade:"G1", track:"Oaklawn Park",    dist:"1 1/16m Dirt", purse:"$600K",  pts:"\u2014", notes:"Premier fillies/mares feature" },
+  { date:"Apr 18", race:"Ashland Stakes",       grade:"G1", track:"Keeneland",       dist:"1 1/16m Dirt", purse:"$600K",  pts:"\u2014", notes:"Key Kentucky Oaks prep" },
+  { date:"Apr 18", race:"Lexington Stakes",     grade:"G3", track:"Keeneland",       dist:"1 1/16m Dirt", purse:"$300K",  pts:"20",  notes:"Final Derby points race" },
+  { date:"Apr 25", race:"Derby Trial",          grade:"G3", track:"Churchill Downs", dist:"1m Dirt",      purse:"$175K",  pts:"20",  notes:"On the Derby track" },
+  { date:"Apr 25", race:"La Troienne Stakes",   grade:"G1", track:"Churchill Downs", dist:"7f Dirt",      purse:"$500K",  pts:"\u2014", notes:"Churchill Oaks Day undercard" },
+  { date:"May 1",  race:"Kentucky Oaks",        grade:"G1", track:"Churchill Downs", dist:"1 1/8m Dirt",  purse:"$2M",    pts:"\u2014", notes:"Oaks Day \u2014 top fillies" },
+  { date:"May 2",  race:"Kentucky Derby",       grade:"G1", track:"Churchill Downs", dist:"1 1/4m Dirt",  purse:"$5M",    pts:"\u2014", notes:"152nd Run for the Roses" },
+  { date:"May 3",  race:"Pat Day Mile",         grade:"G2", track:"Churchill Downs", dist:"1m Turf",      purse:"$500K",  pts:"\u2014", notes:"Derby Weekend undercard" },
+  { date:"May 16", race:"Preakness Stakes",     grade:"G1", track:"Pimlico",         dist:"1 3/16m Dirt", purse:"$2M",    pts:"\u2014", notes:"Triple Crown leg 2" },
+  { date:"Jun 6",  race:"Belmont Stakes",       grade:"G1", track:"Saratoga",        dist:"1 1/2m Dirt",  purse:"$2M",    pts:"\u2014", notes:"Triple Crown leg 3" }
 ];
 
-// ── UPCOMING CARDS ────────────────────────────────────────────────────
+// ── UPCOMING CARDS — Updated Apr 1, 2026 ──────────────────────────
 const upcomingCards = [
-  { track:"Oaklawn Park",    date:"Sat, Mar 28", chips:["Arkansas Derby G1","Smarty Jones S.","8-Race Card"],     purse:"Featured: <strong>$1.5M</strong>" },
-  { track:"Gulfstream Park", date:"Sat, Mar 28", chips:["Florida Derby G1","Orchid S. G3","9-Race Card"],         purse:"Featured: <strong>$1M</strong>" },
-  { track:"Keeneland",       date:"Sun, Apr 5",  chips:["Blue Grass G1","Limestone S.","8-Race Card"],            purse:"Featured: <strong>$1M</strong>" },
-  { track:"Aqueduct",        date:"Sun, Apr 5",  chips:["Wood Memorial G2","Gazelle S. G3","8-Race Card"],        purse:"Featured: <strong>$750K</strong>" },
-  { track:"Santa Anita",     date:"Sun, Apr 5",  chips:["Santa Anita Derby G1","Santa Ana S.","9-Race Card"],     purse:"Featured: <strong>$1M</strong>" },
-  { track:"Keeneland",       date:"Sat, Apr 18", chips:["Ashland S. G1","Lexington S. G3","Full Card"],           purse:"Featured: <strong>$600K</strong>" },
-  { track:"Churchill Downs", date:"Thu, May 1",  chips:["Kentucky Oaks G1","La Troienne G1","Oaks Day"],          purse:"Featured: <strong>$2M</strong>" },
-  { track:"Churchill Downs", date:"Sat, May 2",  chips:["KENTUCKY DERBY G1","Pat Day Mile G2","Full Derby Card"], purse:"Featured: <strong>$5M</strong>" },
+  { track:"Keeneland",       date:"Sat, Apr 5",  chips:["Blue Grass G1","Limestone S.","8-Race Card"],            purse:"Featured: <strong>$1M</strong>" },
+  { track:"Aqueduct",        date:"Sat, Apr 5",  chips:["Wood Memorial G2","Gazelle S. G3","13-Horse Field"],      purse:"Featured: <strong>$750K</strong>" },
+  { track:"Santa Anita",     date:"Sat, Apr 5",  chips:["Santa Anita Derby G1","Santa Ana S.","9-Race Card"],      purse:"Featured: <strong>$1M</strong>" },
+  { track:"Keeneland",       date:"Sat, Apr 18", chips:["Ashland S. G1","Lexington S. G3","Full Card"],            purse:"Featured: <strong>$600K</strong>" },
+  { track:"Churchill Downs", date:"Thu, May 1",  chips:["Kentucky Oaks G1","La Troienne G1","Oaks Day"],           purse:"Featured: <strong>$2M</strong>" },
+  { track:"Churchill Downs", date:"Sat, May 2",  chips:["KENTUCKY DERBY G1","Pat Day Mile G2","Full Derby Card"],  purse:"Featured: <strong>$5M</strong>" }
 ];
 
-// ── RENDER NEWS ───────────────────────────────────────────────────────
+// ── RENDER NEWS ────────────────────────────────────────────────────
 function renderNews() {
-  const grid = document.getElementById('news-grid');
+  const grid  = document.getElementById('news-grid');
   const badge = document.getElementById('news-date-badge');
   if (newsData.length) badge.textContent = newsData[0].date;
   grid.innerHTML = newsData.map(n => {
     const isLink = n.url && n.url.length > 0;
-    const tag = isLink ? 'a' : 'div';
-    const attrs = isLink ? `href="${n.url}" target="_blank" rel="noopener"` : '';
+    const tag    = isLink ? 'a' : 'div';
+    const attrs  = isLink ? `href="${n.url}" target="_blank" rel="noopener"` : '';
     return `<${tag} class="news-card" ${attrs}>
       <div class="news-cat">${n.category}</div>
       <div class="news-title">${n.title}</div>
@@ -630,18 +569,16 @@ function renderNews() {
   }).join('');
 }
 
-// ── RENDER STAKES ──────────────────────────────────────────────────────
+// ── RENDER STAKES ──────────────────────────────────────────────────
 function renderStakes() {
   const filterRow = document.getElementById('track-filters');
   const tbody     = document.getElementById('stakes-tbody');
   const tracks    = ['All', ...new Set(stakesData.map(s => s.track))];
-
   filterRow.innerHTML = '<span class="filter-lbl">Track</span>' +
     tracks.map(t => `<button class="filter-btn${t==='All'?' active':''}" data-track="${t}">${t}</button>`).join('');
-
   tbody.innerHTML = stakesData.map(s => {
-    const gc = s.grade==='G1' ? 'gp-g1' : s.grade==='G2' ? 'gp-g2' : 'gp-g3';
-    const rc = s.grade==='G1' ? ' g1-row' : '';
+    const gc  = s.grade==='G1' ? 'gp-g1' : s.grade==='G2' ? 'gp-g2' : 'gp-g3';
+    const rc  = s.grade==='G1' ? ' g1-row' : '';
     return `<tr class="stake-row${rc}" data-track="${s.track}">
       <td class="date-cell">${s.date}</td>
       <td><strong>${s.race}</strong></td>
@@ -653,7 +590,6 @@ function renderStakes() {
       <td class="note-cell">${s.notes}</td>
     </tr>`;
   }).join('');
-
   filterRow.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       filterRow.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -666,15 +602,16 @@ function renderStakes() {
   });
 }
 
-// ── RENDER CARDS ──────────────────────────────────────────────────────
+// ── RENDER CARDS ───────────────────────────────────────────────────
 function renderCards() {
-  document.getElementById('card-grid').innerHTML = upcomingCards.map(r => `
-    <div class="track-card">
+  document.getElementById('card-grid').innerHTML = upcomingCards.map(r =>
+    `<div class="track-card">
       <div class="tc-name">${r.track}</div>
       <div class="tc-date">${r.date}</div>
       <div class="tc-chips">${r.chips.map((c,i)=>`<span class="tc-chip${i===0?' featured':''}">${c}</span>`).join('')}</div>
       <div class="tc-purse">${r.purse}</div>
-    </div>`).join('');
+    </div>`
+  ).join('');
 }
 
 renderNews();
